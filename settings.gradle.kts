@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google {
             content {
@@ -11,6 +12,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -19,6 +21,19 @@ dependencyResolutionManagement {
     }
 }
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 rootProject.name = "Dallyrun"
+
 include(":app")
- 
+include(":core:common")
+include(":core:model")
+include(":core:data")
+include(":core:database")
+include(":core:domain")
+include(":core:designsystem")
+include(":core:network")
+include(":core:ui")
+include(":core:testing")
+include(":feature:run")
+include(":feature:history")

@@ -1,4 +1,4 @@
-package com.inseong.dallyrun.ui.theme
+package com.inseong.dallyrun.core.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 
