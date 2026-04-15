@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.inseong.dallyrun.feature.run.RunScreen
+import com.inseong.dallyrun.feature.run.RunRoute as RunRouteScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -16,6 +16,6 @@ fun NavController.navigateToRun(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.runScreen() {
     composable<RunRoute> {
-        RunScreen()
+        RunRouteScreen()
     }
 }
