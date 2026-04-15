@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.inseong.dallyrun.feature.history.HistoryScreen
+import com.inseong.dallyrun.feature.history.HistoryRoute as HistoryRouteScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -16,6 +16,6 @@ fun NavController.navigateToHistory(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.historyScreen() {
     composable<HistoryRoute> {
-        HistoryScreen()
+        HistoryRouteScreen()
     }
 }
