@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-abstract class MviViewModel<S : UiState, E : UiEvent, F : SideEffect> : ViewModel() {
+abstract class DallyrunViewModel<S : UiState, E : UiEvent, F : SideEffect> : ViewModel() {
 
     private val _uiState: MutableStateFlow<S> by lazy { MutableStateFlow(createInitialState()) }
     val uiState: StateFlow<S> = _uiState.asStateFlow()

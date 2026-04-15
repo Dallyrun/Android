@@ -1,11 +1,11 @@
 package com.inseong.dallyrun.feature.run
 
-import com.inseong.dallyrun.core.common.mvi.MviViewModel
+import com.inseong.dallyrun.core.common.mvi.DallyrunViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class RunViewModel @Inject constructor() : MviViewModel<RunUiState, RunUiEvent, RunSideEffect>() {
+class RunViewModel @Inject constructor() : DallyrunViewModel<RunUiState, RunUiEvent, RunSideEffect>() {
 
     override fun createInitialState(): RunUiState = RunUiState()
 

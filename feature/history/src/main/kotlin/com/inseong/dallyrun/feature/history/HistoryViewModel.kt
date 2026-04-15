@@ -1,11 +1,11 @@
 package com.inseong.dallyrun.feature.history
 
-import com.inseong.dallyrun.core.common.mvi.MviViewModel
+import com.inseong.dallyrun.core.common.mvi.DallyrunViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class HistoryViewModel @Inject constructor() : MviViewModel<HistoryUiState, HistoryUiEvent, HistorySideEffect>() {
+class HistoryViewModel @Inject constructor() : DallyrunViewModel<HistoryUiState, HistoryUiEvent, HistorySideEffect>() {
 
     override fun createInitialState(): HistoryUiState = HistoryUiState()
 
