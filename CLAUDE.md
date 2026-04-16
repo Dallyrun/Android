@@ -57,11 +57,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **`core:model`** — Pure Kotlin domain models (JVM library)
 - **`core:domain`** — Use cases, Repository 인터페이스 (JVM library)
 - **`core:data`** — Repository implementations, TokenManager (DataStore), Auth 토큰 관리
-- **`core:database`** — Room database (local cache)
+- **`core:database`** — Room database (local cache, 추후 구현 예정)
 - **`core:network`** — Retrofit + OkHttp, 백엔드 API 통신, DTO ↔ Domain 매핑, Auth 인터셉터/인증기
 - **`core:designsystem`** — Material 3 theme, shared design components
 - **`core:ui`** — Reusable Compose UI components
-- **`core:location`** — GPS 위치 추적 (FusedLocationProviderClient, Foreground Service, LocationRepository)
 - **`core:testing`** — 공유 테스트 인프라 (MainDispatcherRule, TestData, MockK, Turbine)
 - **`feature:*`** — 각 피처 모듈 (MVI 패턴)
 
