@@ -23,7 +23,7 @@ class AuthInterceptorTest {
     fun `should add authorization header when token is available`() {
         coEvery { tokenProvider.getAccessToken() } returns "test-access-token"
 
-        val chain = createChain("https://api.dallyrun.com/runs")
+        val chain = createChain("https://example.com/runs")
         interceptor.intercept(chain)
 
         val captured = chain.capturedRequest
@@ -32,7 +32,7 @@ class AuthInterceptorTest {
 
     @Test
     fun `should skip auth header for auth endpoints`() {
-        val chain = createChain("https://api.dallyrun.com/api/auth/oauth/kakao")
+        val chain = createChain("https://example.com/api/auth/oauth/kakao")
         interceptor.intercept(chain)
 
         val captured = chain.capturedRequest
@@ -43,7 +43,7 @@ class AuthInterceptorTest {
     fun `should proceed without header when token is null`() {
         coEvery { tokenProvider.getAccessToken() } returns null
 
-        val chain = createChain("https://api.dallyrun.com/runs")
+        val chain = createChain("https://example.com/runs")
         interceptor.intercept(chain)
 
         val captured = chain.capturedRequest
