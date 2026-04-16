@@ -55,10 +55,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **`build-logic`** — Convention plugins
 - **`core:common`** — MVI base classes (`DallyrunViewModel`, `UiState`, `UiEvent`, `SideEffect`)
 - **`core:model`** — Pure Kotlin domain models (JVM library)
-- **`core:domain`** — Use cases (JVM library)
-- **`core:data`** — Repository implementations
+- **`core:domain`** — Use cases, Repository 인터페이스 (JVM library)
+- **`core:data`** — Repository implementations, TokenManager (DataStore), Auth 토큰 관리
 - **`core:database`** — Room database (local cache)
-- **`core:network`** — Retrofit + OkHttp, 백엔드 API 통신, DTO ↔ Domain 매핑
+- **`core:network`** — Retrofit + OkHttp, 백엔드 API 통신, DTO ↔ Domain 매핑, Auth 인터셉터/인증기
 - **`core:designsystem`** — Material 3 theme, shared design components
 - **`core:ui`** — Reusable Compose UI components
 - **`core:location`** — GPS 위치 추적 (FusedLocationProviderClient, Foreground Service, LocationRepository)
