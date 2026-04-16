@@ -7,17 +7,17 @@ model ← (의존성 없음, 순수 Kotlin)
 domain ← model
 common ← (Android 의존, ViewModel)
 network ← model (Retrofit, DTO↔Domain 매핑)
-database ← model (Room, Entity↔Domain 매핑)
-location ← model (GPS 추적, FusedLocationProviderClient, Foreground Service)
-data ← model, domain, network, database (Repository 구현, DataStore 토큰 관리)
+data ← model, domain, network (Repository 구현, DataStore 토큰 관리)
 designsystem ← (Compose, Material3 theme)
 ui ← model, designsystem (공유 UI 컴포넌트)
 testing ← model (테스트 인프라, TestData)
 ```
 
-**금지:** core 모듈 간 순환 의존. `network`와 `database`는 서로 의존하지 않는다.
+**금지:** core 모듈 간 순환 의존.
 
 **문서 동기화:** core 모듈이 추가/변경되면 이 파일의 의존성 규칙과 루트 `CLAUDE.md`의 Module Structure도 함께 업데이트한다.
+
+> 로컬 캐시(`core:database` — Room)와 GPS 추적(`core:location` — FusedLocationProviderClient, Foreground Service) 모듈은 추후 구현 시 이 문서에 다시 추가한다.
 
 ## core:network 사용법
 
@@ -46,13 +46,6 @@ Auth 관련 변경 시:
 2. `model/`에 요청/응답 DTO 작성
 3. `core:data`의 `AuthRepositoryImpl`에서 호출
 4. `core:domain`의 `AuthRepository` 인터페이스에 메서드 추가
-
-## core:database 사용법
-
-- Room Entity: `*Entity.kt` — `@Entity`, DB 스키마
-- DAO: `*Dao.kt` — `@Dao`, Flow 반환 쿼리
-- Entity ↔ Domain 매핑: `*Entity.toDomain()` / `*Entity.fromDomain()` 확장 함수
-- 스키마 export: `schemas/` 디렉토리에 자동 저장
 
 ## core:testing 사용법
 
