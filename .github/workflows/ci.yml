@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Configure local.properties
-        run: echo "BASE_URL=${{ secrets.BASE_URL }}" >> local.properties
+        run: echo "BASE_URL=${{ secrets.BASE_URL || 'https://placeholder.invalid/' }}" >> local.properties
 
       - uses: actions/setup-java@v4
         with:
@@ -39,7 +39,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Configure local.properties
-        run: echo "BASE_URL=${{ secrets.BASE_URL }}" >> local.properties
+        run: echo "BASE_URL=${{ secrets.BASE_URL || 'https://placeholder.invalid/' }}" >> local.properties
 
       - uses: actions/setup-java@v4
         with:
