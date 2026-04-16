@@ -82,7 +82,7 @@ class TokenAuthenticatorTest {
 
     private fun create401Response(requestToken: String?): Response {
         val requestBuilder = Request.Builder()
-            .url("https://api.dallyrun.com/runs")
+            .url("https://example.com/runs")
         if (requestToken != null) {
             requestBuilder.header("Authorization", "Bearer $requestToken")
         }
