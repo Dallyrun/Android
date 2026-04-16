@@ -1,6 +1,7 @@
 package com.inseong.dallyrun.core.network.interceptor
 
 import com.inseong.dallyrun.core.network.TokenProvider
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -17,11 +18,11 @@ internal class AuthInterceptor @Inject constructor(
             return chain.proceed(request)
         }
 
-        val accessToken = runBlocking { tokenProvider.getAccessToken() }
+        val accessToken = runBlocking(Dispatchers.IO) { tokenProvider.getAccessToken() }
             ?: return chain.proceed(request)
 
         val authenticatedRequest = request.newBuilder()
-            .header("Authorization", "Bearer $accessToken")
+            .header(AUTHORIZATION_HEADER, "$BEARER_PREFIX$accessToken")
             .build()
 
         return chain.proceed(authenticatedRequest)
