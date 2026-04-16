@@ -3,6 +3,7 @@ package com.inseong.dallyrun.feature.run
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.inseong.dallyrun.core.designsystem.theme.DallyrunTheme
 
 @Composable
 internal fun RunScreen(
@@ -16,8 +17,10 @@ internal fun RunScreen(
 @Preview
 @Composable
 private fun PreviewRunScreen() {
-    RunScreen(
-        uiState = RunUiState(),
-        onEvent = {},
-    )
+    DallyrunTheme {
+        RunScreen(
+            uiState = RunUiState(),
+            onEvent = {},
+        )
+    }
 }

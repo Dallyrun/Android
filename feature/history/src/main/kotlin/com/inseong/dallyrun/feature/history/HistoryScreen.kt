@@ -3,6 +3,7 @@ package com.inseong.dallyrun.feature.history
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.inseong.dallyrun.core.designsystem.theme.DallyrunTheme
 
 @Composable
 internal fun HistoryScreen(
@@ -16,8 +17,10 @@ internal fun HistoryScreen(
 @Preview
 @Composable
 private fun PreviewHistoryScreen() {
-    HistoryScreen(
-        uiState = HistoryUiState(),
-        onEvent = {},
-    )
+    DallyrunTheme {
+        HistoryScreen(
+            uiState = HistoryUiState(),
+            onEvent = {},
+        )
+    }
 }
