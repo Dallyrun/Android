@@ -16,15 +16,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.inseong.dallyrun.core.designsystem.theme.DallyrunTheme
-
-private val KakaoYellow = Color(0xFFFEE500)
-private val KakaoLabelBlack = Color(0xFF191919)
+import com.inseong.dallyrun.core.designsystem.theme.KakaoLabel
+import com.inseong.dallyrun.core.designsystem.theme.KakaoYellow
 
 @Composable
 internal fun LoginScreen(
@@ -56,7 +54,7 @@ internal fun LoginScreen(
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = KakaoYellow,
-                contentColor = KakaoLabelBlack,
+                contentColor = KakaoLabel,
             ),
         ) {
             Text(text = stringResource(id = R.string.login_kakao))
