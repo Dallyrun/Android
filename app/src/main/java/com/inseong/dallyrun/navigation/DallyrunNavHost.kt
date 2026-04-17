@@ -5,7 +5,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.inseong.dallyrun.feature.history.navigation.historyScreen
-import com.inseong.dallyrun.feature.run.navigation.RunRoute
+import com.inseong.dallyrun.feature.login.navigation.LoginRoute
+import com.inseong.dallyrun.feature.login.navigation.loginScreen
 import com.inseong.dallyrun.feature.run.navigation.runScreen
 
 @Composable
@@ -15,9 +16,10 @@ fun DallyrunNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = RunRoute,
+        startDestination = LoginRoute,
         modifier = modifier,
     ) {
+        loginScreen()
         runScreen()
         historyScreen()
     }
