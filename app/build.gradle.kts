@@ -34,6 +34,7 @@ dependencies {
     implementation(projects.core.ui)
     implementation(projects.feature.run)
     implementation(projects.feature.history)
+    implementation(projects.feature.login)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
