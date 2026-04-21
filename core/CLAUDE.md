@@ -34,7 +34,7 @@ testing ← model (테스트 인프라, TestData)
 
 ### Auth API 패턴
 
-- **`AuthApi.kt`** — 인증 전용 Retrofit 인터페이스 (카카오 로그인, 토큰 갱신, 로그아웃)
+- **`AuthApi.kt`** — 인증 전용 Retrofit 인터페이스 (토큰 갱신, 로그아웃 등)
 - **`TokenProvider`** — 토큰 읽기/쓰기 인터페이스 (`core:network`에 정의, `core:data`에서 구현)
 - **`AuthInterceptor`** — 일반 API 요청에 Authorization 헤더 자동 주입 (`api/auth/` 경로 제외)
 - **`TokenAuthenticator`** — 401 응답 시 토큰 자동 갱신 + 요청 재시도

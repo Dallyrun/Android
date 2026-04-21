@@ -32,7 +32,7 @@ class AuthInterceptorTest {
 
     @Test
     fun `should skip auth header for auth endpoints`() {
-        val chain = createChain("https://example.com/api/auth/oauth/kakao")
+        val chain = createChain("https://example.com/api/auth/refresh")
         interceptor.intercept(chain)
 
         val captured = chain.capturedRequest

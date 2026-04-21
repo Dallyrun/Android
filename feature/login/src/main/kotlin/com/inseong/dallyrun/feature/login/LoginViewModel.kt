@@ -10,8 +10,6 @@ class LoginViewModel @Inject constructor() : DallyrunViewModel<LoginUiState, Log
     override fun createInitialState(): LoginUiState = LoginUiState()
 
     override fun handleEvent(event: LoginUiEvent) {
-        when (event) {
-            LoginUiEvent.OnKakaoLoginClick -> sendSideEffect(LoginSideEffect.LaunchKakaoLogin)
-        }
+        // TODO: 이메일/비밀번호 로그인 이벤트 추가 예정
     }
 }

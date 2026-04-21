@@ -5,8 +5,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
 
-    suspend fun loginWithKakao(authCode: String): AuthToken
-
     suspend fun refreshToken(): AuthToken
 
     suspend fun logout()

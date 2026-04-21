@@ -4,7 +4,6 @@ import app.cash.turbine.test
 import com.inseong.dallyrun.core.network.AuthApi
 import com.inseong.dallyrun.core.network.model.ApiResponse
 import com.inseong.dallyrun.core.network.model.NetworkTokenResponse
-import com.inseong.dallyrun.core.network.model.OAuthLoginRequest
 import com.inseong.dallyrun.core.network.model.TokenRefreshRequest
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -22,18 +21,6 @@ class AuthRepositoryImplTest {
     private val authApi = mockk<AuthApi>(relaxUnitFun = true)
     private val tokenManager = mockk<TokenManagerImpl>(relaxUnitFun = true)
     private val repository = AuthRepositoryImpl(authApi, tokenManager)
-
-    @Test
-    fun `loginWithKakao should call api and save tokens`() = runTest {
-        val response = ApiResponse(NetworkTokenResponse("access", "refresh"))
-        coEvery { authApi.loginWithKakao(OAuthLoginRequest("kakao-code")) } returns response
-
-        val result = repository.loginWithKakao("kakao-code")
-
-        assertEquals("access", result.accessToken)
-        assertEquals("refresh", result.refreshToken)
-        coVerify { tokenManager.saveTokens(accessToken = "access", refreshToken = "refresh") }
-    }
 
     @Test
     fun `refreshToken should call api and save new tokens`() = runTest {

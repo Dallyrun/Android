@@ -62,7 +62,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **`core:designsystem`** — Material 3 theme, shared design components
 - **`core:ui`** — Reusable Compose UI components
 - **`core:testing`** — 공유 테스트 인프라 (MainDispatcherRule, TestData, MockK, Turbine)
-- **`feature:login`** — 카카오 로그인 진입 화면 (앱 startDestination)
+- **`feature:login`** — 로그인 진입 화면 (앱 startDestination, 이메일/비번 추후 구현)
 - **`feature:*`** — 각 피처 모듈 (MVI 패턴)
 
 ### Convention Plugins (build-logic)

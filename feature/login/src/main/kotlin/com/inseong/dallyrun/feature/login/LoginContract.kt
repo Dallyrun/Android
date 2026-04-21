@@ -8,11 +8,6 @@ data class LoginUiState(
     val isLoading: Boolean = false,
 ) : UiState
 
-sealed interface LoginUiEvent : UiEvent {
-    data object OnKakaoLoginClick : LoginUiEvent
-}
+sealed interface LoginUiEvent : UiEvent
 
-sealed interface LoginSideEffect : SideEffect {
-    data object LaunchKakaoLogin : LoginSideEffect
-    data class ShowError(val message: String) : LoginSideEffect
-}
+sealed interface LoginSideEffect : SideEffect
