@@ -2,6 +2,17 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## `.claude/` 디렉터리
+
+| 경로 | 역할 |
+|---|---|
+| `.claude/commands/` | 슬래시 커맨드 (`/build`, `/test`, `/check`, `/pr`, `/new-feature`) |
+| `.claude/rules/` | 사람/AI 공용 규칙 문서 (`git-convention.md`, `mvi-pattern.md`) |
+| `.claude/skills/` | 자동 트리거되는 Skill (`new-feature-scaffold`) |
+| `.claude/settings.local.json` | 개인 권한 설정 (gitignore — 체크인 금지) |
+
+`.claude/rules/*.md` 는 Claude Code가 자동 로드하지 않으므로, 필요하면 슬래시 커맨드/Skill 본문에서 `@.claude/rules/...` 로 명시 import 한다.
+
 ## Workflow
 
 - 작업 시작 시 반드시 **플랜 모드**로 계획을 세운 뒤 승인받고 구현한다.
