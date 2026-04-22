@@ -1,5 +1,7 @@
 # Feature Module Guide
 
+> 핵심 패턴 요약은 [`.claude/rules/mvi-pattern.md`](../.claude/rules/mvi-pattern.md) 에도 정리되어 있다 (skills/commands가 참조). 본 문서는 더 자세한 가이드/예시 포함.
+
 ## MVI 패턴
 
 각 feature는 파일을 목적별로 분리하여 구성:
