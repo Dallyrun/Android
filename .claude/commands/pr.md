@@ -2,12 +2,12 @@
 description: 현재 브랜치 push + 컨벤션 맞춰 PR 생성
 ---
 
-@.claude/rules/git-convention.md 를 따라 PR을 생성한다.
+루트 `CLAUDE.md` 의 **Git Convention** 섹션을 따라 PR을 생성한다.
 
 ## 절차
 
 1. `git status` / `git diff main...HEAD` / `git log main..HEAD --oneline` 으로 변경을 분석한다.
-2. Conventional Commits prefix (`feat` / `fix` / `refactor` / `chore` / `docs` / `test`) 중 적절한 것을 고른다.
+2. Conventional Commits prefix(`feat` / `fix` / `refactor` / `chore` / `docs` / `test`) 중 적절한 것을 고른다.
 3. PR title: `<prefix>(<scope>): <요약>` (한글 OK, 70자 이내).
 4. PR body 구조:
    ```
