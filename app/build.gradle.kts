@@ -35,6 +35,7 @@ dependencies {
     implementation(projects.feature.run)
     implementation(projects.feature.history)
     implementation(projects.feature.login)
+    implementation(projects.feature.signup)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

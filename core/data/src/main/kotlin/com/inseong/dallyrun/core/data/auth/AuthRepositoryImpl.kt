@@ -13,6 +13,21 @@ internal class AuthRepositoryImpl @Inject constructor(
     private val tokenManager: TokenManagerImpl,
 ) : AuthRepository {
 
+    override suspend fun loginWithEmail(email: String, password: String): AuthToken {
+        // TODO: 후속 PR에서 AuthApi.loginWithEmail 엔드포인트 호출 + 토큰 저장 구현
+        throw NotImplementedError("이메일/비밀번호 로그인 백엔드 연동은 후속 PR에서 진행")
+    }
+
+    override suspend fun signup(
+        email: String,
+        password: String,
+        nickname: String,
+        profileImageUri: String?,
+    ): AuthToken {
+        // TODO: 후속 PR에서 AuthApi.signup 엔드포인트 호출 + 프로필 이미지 업로드 + 토큰 저장 구현
+        throw NotImplementedError("회원가입 백엔드 연동은 후속 PR에서 진행")
+    }
+
     override suspend fun refreshToken(): AuthToken {
         val refreshToken = requireNotNull(tokenManager.getRefreshToken()) {
             "Refresh token is not available"
