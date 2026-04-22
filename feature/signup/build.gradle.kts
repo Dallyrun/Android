@@ -3,10 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.inseong.dallyrun.feature.login"
+    namespace = "com.inseong.dallyrun.feature.signup"
 }
 
 dependencies {
     implementation(projects.core.domain)
+    implementation(libs.coil.compose)
     testImplementation(projects.core.testing)
 }

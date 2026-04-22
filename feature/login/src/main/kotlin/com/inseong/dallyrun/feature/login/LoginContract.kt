@@ -5,9 +5,27 @@ import com.inseong.dallyrun.core.common.mvi.UiEvent
 import com.inseong.dallyrun.core.common.mvi.UiState
 
 data class LoginUiState(
+    val email: String = "",
+    val password: String = "",
+    val isPasswordVisible: Boolean = false,
     val isLoading: Boolean = false,
-) : UiState
+    val errorMessage: String? = null,
+) : UiState {
 
-sealed interface LoginUiEvent : UiEvent
+    val canSubmit: Boolean
+        get() = email.isNotBlank() && password.isNotBlank() && !isLoading
+}
 
-sealed interface LoginSideEffect : SideEffect
+sealed interface LoginUiEvent : UiEvent {
+    data class OnEmailChange(val value: String) : LoginUiEvent
+    data class OnPasswordChange(val value: String) : LoginUiEvent
+    data object OnPasswordVisibilityToggle : LoginUiEvent
+    data object OnLoginClick : LoginUiEvent
+    data object OnSignupClick : LoginUiEvent
+    data object OnErrorDismiss : LoginUiEvent
+}
+
+sealed interface LoginSideEffect : SideEffect {
+    data object NavigateToSignup : LoginSideEffect
+    data object NavigateToHome : LoginSideEffect
+}
