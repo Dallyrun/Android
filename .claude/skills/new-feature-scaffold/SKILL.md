@@ -7,10 +7,10 @@ description: Use this skill when the user requests scaffolding a new feature mod
 
 달리런 안드 프로젝트에 새 feature 모듈을 MVI 패턴으로 생성한다.
 
-## 참조
+## 참조 문서 (자동 로드되는 CLAUDE.md)
 
-- 패턴: @.claude/rules/mvi-pattern.md
-- Git: @.claude/rules/git-convention.md
+- 패턴 상세: `feature/CLAUDE.md`
+- Git/PR 규칙: 루트 `CLAUDE.md` 의 **Git Convention** 섹션
 - 기존 예시: `feature/run/`, `feature/history/`, `feature/login/`
 
 ## 입력
@@ -50,7 +50,7 @@ feature/<name>/
 
 `<Name>` 은 첫 글자 대문자 PascalCase (`profile` → `Profile`).
 
-각 파일 템플릿은 @.claude/rules/mvi-pattern.md 의 코드 샘플을 그대로 사용한다.
+각 파일 템플릿은 `feature/CLAUDE.md` 의 코드 샘플을 그대로 사용한다.
 
 ### 4. 모듈 등록
 
@@ -74,7 +74,7 @@ feature/<name>/
 ```
 
 ### 7. PR 생성
-@.claude/commands/pr.md 또는 `/pr` 슬래시 커맨드 활용.
+`/pr` 슬래시 커맨드를 활용하거나 동일한 절차로 직접 생성.
 
 PR title 예시: `feat(<name>): scaffold <name> feature module`
 
