@@ -13,7 +13,12 @@ import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Visibility
+import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -86,16 +91,20 @@ internal fun LoginScreen(
                 imeAction = ImeAction.Done,
             ),
             trailingIcon = {
-                TextButton(onClick = { onEvent(LoginUiEvent.OnPasswordVisibilityToggle) }) {
-                    Text(
-                        text = stringResource(
+                IconButton(onClick = { onEvent(LoginUiEvent.OnPasswordVisibilityToggle) }) {
+                    Icon(
+                        imageVector = if (uiState.isPasswordVisible) {
+                            Icons.Outlined.VisibilityOff
+                        } else {
+                            Icons.Outlined.Visibility
+                        },
+                        contentDescription = stringResource(
                             id = if (uiState.isPasswordVisible) {
                                 R.string.login_password_hide
                             } else {
                                 R.string.login_password_show
                             },
                         ),
-                        style = MaterialTheme.typography.labelSmall,
                     )
                 }
             },

@@ -52,7 +52,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.androidx.compose.material.icons.extended) // BottomBar 아이콘 — feature 모듈은 convention plugin으로 제공받음
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
