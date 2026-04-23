@@ -19,6 +19,15 @@ testing ← model (테스트 인프라, TestData)
 
 > 로컬 캐시(`core:database` — Room)와 GPS 추적(`core:location` — FusedLocationProviderClient, Foreground Service) 모듈은 추후 구현 시 이 문서에 다시 추가한다.
 
+## core:designsystem 사용법
+
+- Brand 색상: 앱 로고 배경색 **`#0169FE`** 를 Material 3 primary로 채택.
+- Color 팔레트: `Brand10`~`Brand99`, `Neutral10`~`Neutral99`, `Error10`~`Error90` (`theme/Color.kt`).
+- 화면/컴포넌트는 **항상 의미적 토큰**을 사용한다:
+  - `MaterialTheme.colorScheme.primary`, `onPrimary`, `surface`, `error` 등
+  - 색상 상수(`Brand40` 등)를 직접 import해서 쓰지 말 것 — 다크모드 전환과 일관성이 깨진다.
+- `DallyrunTheme(dynamicColor = false)` 가 기본. Android 12+ 월페이퍼 채색이 브랜드를 덮지 않게 하기 위함.
+
 ## core:network 사용법
 
 - API 인터페이스: `DallyrunApi.kt` — Retrofit suspend 함수
