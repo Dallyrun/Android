@@ -31,7 +31,7 @@ internal fun SignupPasswordScreen(
     onNext: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val passwordLengthInvalid = uiState.password.isNotBlank() && !isValidPassword(uiState.password)
+    val passwordInvalid = uiState.password.isNotBlank() && !isValidPassword(uiState.password)
     val confirmMismatch = uiState.passwordConfirm.isNotBlank() &&
         uiState.password != uiState.passwordConfirm
 
@@ -62,14 +62,14 @@ internal fun SignupPasswordScreen(
             onValueChange = { onEvent(SignupUiEvent.OnPasswordChange(it)) },
             label = { Text(text = stringResource(id = R.string.signup_password_label)) },
             singleLine = true,
-            isError = passwordLengthInvalid,
+            isError = passwordInvalid,
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Next,
             ),
-            supportingText = if (passwordLengthInvalid) {
-                { Text(text = stringResource(id = R.string.signup_password_invalid_length)) }
+            supportingText = if (passwordInvalid) {
+                { Text(text = stringResource(id = R.string.signup_password_invalid)) }
             } else {
                 null
             },

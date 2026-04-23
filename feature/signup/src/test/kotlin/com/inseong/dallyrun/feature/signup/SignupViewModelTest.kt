@@ -41,34 +41,59 @@ class SignupViewModelTest {
     // ───── Password step ─────
 
     @Test
-    fun `should reject password length 7`() {
+    fun `should reject password length 7 even with all classes`() {
         val vm = viewModel()
-        vm.onEvent(SignupUiEvent.OnPasswordChange("a".repeat(7)))
-        vm.onEvent(SignupUiEvent.OnPasswordConfirmChange("a".repeat(7)))
+        vm.onEvent(SignupUiEvent.OnPasswordChange("Aa1!Aa1"))
+        vm.onEvent(SignupUiEvent.OnPasswordConfirmChange("Aa1!Aa1"))
         assertFalse(vm.uiState.value.canProceedFromPassword)
     }
 
     @Test
     fun `should accept password length 8 when confirm matches`() {
         val vm = viewModel()
-        vm.onEvent(SignupUiEvent.OnPasswordChange("a".repeat(8)))
-        vm.onEvent(SignupUiEvent.OnPasswordConfirmChange("a".repeat(8)))
+        vm.onEvent(SignupUiEvent.OnPasswordChange("Aa1!Aa1!"))
+        vm.onEvent(SignupUiEvent.OnPasswordConfirmChange("Aa1!Aa1!"))
         assertTrue(vm.uiState.value.canProceedFromPassword)
     }
 
     @Test
-    fun `should reject password length 101`() {
+    fun `should reject password length 31`() {
         val vm = viewModel()
-        vm.onEvent(SignupUiEvent.OnPasswordChange("a".repeat(101)))
-        vm.onEvent(SignupUiEvent.OnPasswordConfirmChange("a".repeat(101)))
+        val long = "Aa1!" + "a".repeat(27)
+        vm.onEvent(SignupUiEvent.OnPasswordChange(long))
+        vm.onEvent(SignupUiEvent.OnPasswordConfirmChange(long))
+        assertFalse(vm.uiState.value.canProceedFromPassword)
+    }
+
+    @Test
+    fun `should reject password without special character`() {
+        val vm = viewModel()
+        vm.onEvent(SignupUiEvent.OnPasswordChange("Aabc1234"))
+        vm.onEvent(SignupUiEvent.OnPasswordConfirmChange("Aabc1234"))
+        assertFalse(vm.uiState.value.canProceedFromPassword)
+    }
+
+    @Test
+    fun `should reject password with whitespace`() {
+        val vm = viewModel()
+        vm.onEvent(SignupUiEvent.OnPasswordChange("Aa1! aaa"))
+        vm.onEvent(SignupUiEvent.OnPasswordConfirmChange("Aa1! aaa"))
+        assertFalse(vm.uiState.value.canProceedFromPassword)
+    }
+
+    @Test
+    fun `should reject password with Korean character`() {
+        val vm = viewModel()
+        vm.onEvent(SignupUiEvent.OnPasswordChange("Aa1!한aa"))
+        vm.onEvent(SignupUiEvent.OnPasswordConfirmChange("Aa1!한aa"))
         assertFalse(vm.uiState.value.canProceedFromPassword)
     }
 
     @Test
     fun `should reject when password and confirm mismatch`() {
         val vm = viewModel()
-        vm.onEvent(SignupUiEvent.OnPasswordChange("12345678"))
-        vm.onEvent(SignupUiEvent.OnPasswordConfirmChange("12345679"))
+        vm.onEvent(SignupUiEvent.OnPasswordChange("Aa1!aaaa"))
+        vm.onEvent(SignupUiEvent.OnPasswordConfirmChange("Aa1!aaab"))
         assertFalse(vm.uiState.value.canProceedFromPassword)
     }
 
@@ -97,8 +122,8 @@ class SignupViewModelTest {
 
         val vm = viewModel()
         vm.onEvent(SignupUiEvent.OnEmailChange("a@b.c"))
-        vm.onEvent(SignupUiEvent.OnPasswordChange("12345678"))
-        vm.onEvent(SignupUiEvent.OnPasswordConfirmChange("12345678"))
+        vm.onEvent(SignupUiEvent.OnPasswordChange("Aa1!Aa1!"))
+        vm.onEvent(SignupUiEvent.OnPasswordConfirmChange("Aa1!Aa1!"))
         vm.onEvent(SignupUiEvent.OnNicknameChange("runner"))
 
         vm.sideEffect.test {
