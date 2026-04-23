@@ -23,6 +23,39 @@ class AuthRepositoryImplTest {
     private val repository = AuthRepositoryImpl(authApi, tokenManager)
 
     @Test
+    fun `loginWithEmail (stub) should return placeholder token and save it`() = runTest {
+        val result = repository.loginWithEmail("a@b.c", "Aa1!Aa1!")
+
+        assertEquals("dev-access-token", result.accessToken)
+        assertEquals("dev-refresh-token", result.refreshToken)
+        coVerify {
+            tokenManager.saveTokens(
+                accessToken = "dev-access-token",
+                refreshToken = "dev-refresh-token",
+            )
+        }
+    }
+
+    @Test
+    fun `signup (stub) should return placeholder token and save it`() = runTest {
+        val result = repository.signup(
+            email = "a@b.c",
+            password = "Aa1!Aa1!",
+            nickname = "runner",
+            profileImageUri = null,
+        )
+
+        assertEquals("dev-access-token", result.accessToken)
+        assertEquals("dev-refresh-token", result.refreshToken)
+        coVerify {
+            tokenManager.saveTokens(
+                accessToken = "dev-access-token",
+                refreshToken = "dev-refresh-token",
+            )
+        }
+    }
+
+    @Test
     fun `refreshToken should call api and save new tokens`() = runTest {
         coEvery { tokenManager.getRefreshToken() } returns "old-refresh"
         val response = ApiResponse(NetworkTokenResponse("new-access", "new-refresh"))

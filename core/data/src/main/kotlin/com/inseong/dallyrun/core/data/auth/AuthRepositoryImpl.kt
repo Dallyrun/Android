@@ -14,8 +14,14 @@ internal class AuthRepositoryImpl @Inject constructor(
 ) : AuthRepository {
 
     override suspend fun loginWithEmail(email: String, password: String): AuthToken {
-        // TODO: 후속 PR에서 AuthApi.loginWithEmail 엔드포인트 호출 + 토큰 저장 구현
-        throw NotImplementedError("이메일/비밀번호 로그인 백엔드 연동은 후속 PR에서 진행")
+        // TODO: 백엔드 연동 시 AuthApi.loginWithEmail 호출로 교체.
+        //  현재는 메인 화면 진입을 막지 않기 위한 dev stub — 실패 분기 없이 fake 토큰 발급.
+        val token = PLACEHOLDER_TOKEN
+        tokenManager.saveTokens(
+            accessToken = token.accessToken,
+            refreshToken = token.refreshToken,
+        )
+        return token
     }
 
     override suspend fun signup(
@@ -24,8 +30,23 @@ internal class AuthRepositoryImpl @Inject constructor(
         nickname: String,
         profileImageUri: String?,
     ): AuthToken {
-        // TODO: 후속 PR에서 AuthApi.signup 엔드포인트 호출 + 프로필 이미지 업로드 + 토큰 저장 구현
-        throw NotImplementedError("회원가입 백엔드 연동은 후속 PR에서 진행")
+        // TODO: 백엔드 연동 시 AuthApi.signup 호출(프로필 이미지 업로드 포함)로 교체.
+        //  현재는 회원가입 완료 후 메인 진입을 위한 dev stub.
+        val token = PLACEHOLDER_TOKEN
+        tokenManager.saveTokens(
+            accessToken = token.accessToken,
+            refreshToken = token.refreshToken,
+        )
+        return token
+    }
+
+    private companion object {
+        // 백엔드 미구현 상태에서 클라 네비게이션/디자인 검증을 위한 placeholder.
+        // 실제 API 연동 시 이 상수와 사용처 모두 제거.
+        val PLACEHOLDER_TOKEN = AuthToken(
+            accessToken = "dev-access-token",
+            refreshToken = "dev-refresh-token",
+        )
     }
 
     override suspend fun refreshToken(): AuthToken {
