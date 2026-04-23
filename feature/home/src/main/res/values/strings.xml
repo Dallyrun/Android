@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_title">달리런</string>
+    <string name="home_subtitle">오늘도 달려볼까요?</string>
+    <string name="home_start_run">달리기 시작</string>
+    <string name="home_dashboard_placeholder">곧 통계와 최근 기록이 여기에 표시돼요</string>
+</resources>

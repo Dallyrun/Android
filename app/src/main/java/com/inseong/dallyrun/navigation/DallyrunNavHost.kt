@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
-import com.inseong.dallyrun.feature.history.navigation.historyScreen
 import com.inseong.dallyrun.feature.login.navigation.LoginRoute
 import com.inseong.dallyrun.feature.login.navigation.loginScreen
 import com.inseong.dallyrun.feature.run.navigation.RunRoute
@@ -25,20 +25,24 @@ fun DallyrunNavHost(
     ) {
         loginScreen(
             onNavigateToSignup = { navController.navigateToSignup() },
-            onNavigateToHome = { navController.navigateToHomeFromAuth() },
+            onNavigateToHome = { navController.navigateToMainFromAuth() },
         )
         signupGraph(
             navController = navController,
-            onSignupComplete = { navController.navigateToHomeFromAuth() },
+            onSignupComplete = { navController.navigateToMainFromAuth() },
         )
+        composable<MainRoute> {
+            MainContainer(
+                onNavigateToRun = { navController.navigate(RunRoute) },
+            )
+        }
         runScreen()
-        historyScreen()
     }
 }
 
-private fun NavHostController.navigateToHomeFromAuth() {
+private fun NavHostController.navigateToMainFromAuth() {
     navigate(
-        route = RunRoute,
+        route = MainRoute,
         navOptions = navOptions {
             popUpTo(LoginRoute) { inclusive = true }
         },

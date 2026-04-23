@@ -117,6 +117,9 @@ git branch -D <머지된-브랜치>
 - **`core:testing`** — 공유 테스트 인프라 (MainDispatcherRule, TestData, MockK, Turbine)
 - **`feature:login`** — 이메일/비밀번호 로그인 화면 (앱 startDestination)
 - **`feature:signup`** — 3단계 회원가입 플로우 (이메일 → 비밀번호 → 프로필)
+- **`feature:home`** — 메인 대시보드 (BottomBar 홈 탭, "달리기 시작" 버튼)
+- **`feature:community`** — 커뮤니티 탭 (placeholder)
+- **`feature:my`** — MY 탭 (placeholder, 프로필/설정 추후)
 - **`feature:*`** — 각 피처 모듈 (MVI 패턴)
 
 ### Convention Plugins (build-logic)
