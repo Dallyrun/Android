@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -45,6 +46,7 @@ internal fun SignupProfileScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
+            .safeDrawingPadding()
             .padding(horizontal = 24.dp, vertical = 16.dp),
     ) {
         SignupProgressBar(currentStep = 3)

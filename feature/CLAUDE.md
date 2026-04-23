@@ -84,7 +84,24 @@ private fun PreviewRunScreen() {
 }
 ```
 
-### 5. 텍스트 리소스
+### 5. 시스템바 인셋 처리 (edge-to-edge)
+
+`MainActivity` 가 `enableEdgeToEdge()` 를 사용하므로 콘텐츠가 시스템바 아래까지 확장된다.
+
+- **MainContainer 내부 화면** (Home / History / Community / MY): 자체 Scaffold 의 `innerPadding` 으로 자동 처리됨 → 추가 작업 불필요.
+- **MainContainer 외부 화면** (Login / Signup / Run 등 풀스크린 destination): 화면 root에 `Modifier.safeDrawingPadding()` **명시 적용 필수**. 빠뜨리면 하단 버튼이 navigation bar에 가려진다.
+
+```kotlin
+Column(
+    modifier = modifier
+        .fillMaxSize()
+        .safeDrawingPadding()        // 시스템바/IME/cutout 인셋
+        .padding(horizontal = 24.dp), // 콘텐츠 패딩
+    ...
+)
+```
+
+### 6. 텍스트 리소스
 
 모든 사용자 노출 문자열은 `res/values/strings.xml`에 정의:
 
@@ -97,7 +114,7 @@ private fun PreviewRunScreen() {
 Text(text = stringResource(R.string.run_start))
 ```
 
-### 6. Navigation
+### 7. Navigation
 
 ```kotlin
 @Serializable
