@@ -5,8 +5,10 @@
     <string name="login_welcome_subtitle">오늘도 달려볼 준비 됐나요?</string>
     <string name="login_email_label">이메일</string>
     <string name="login_email_placeholder">name@example.com</string>
+    <string name="login_email_invalid">올바른 이메일 형식이 아니에요</string>
     <string name="login_password_label">비밀번호</string>
     <string name="login_password_placeholder">비밀번호를 입력하세요</string>
+    <string name="login_password_invalid">영문, 숫자, 특수문자를 모두 포함해 8~30자로 입력해주세요</string>
     <string name="login_password_show">비밀번호 보기</string>
     <string name="login_password_hide">비밀번호 숨기기</string>
     <string name="login_button">로그인하기</string>
