@@ -24,6 +24,7 @@ val Neutral50 = Color(0xFF76777A)
 val Neutral60 = Color(0xFF909094)
 val Neutral80 = Color(0xFFC6C6CA)
 val Neutral90 = Color(0xFFE2E2E6)
+val Neutral95 = Color(0xFFF1F1F4) // surfaceVariant 등 미세 구분용 (거의 white)
 val Neutral99 = Color(0xFFFEFBFF)
 
 // ───── Error (Material 3 표준 톤) ─────

@@ -27,12 +27,21 @@ private val DallyrunLightColorScheme = lightColorScheme(
     tertiaryContainer = Neutral90,
     onTertiaryContainer = Neutral10,
 
-    background = Neutral99,
+    // 모든 surface 계열을 순백으로 + tonal tint 차단
+    background = Color.White,
     onBackground = Neutral10,
-    surface = Neutral99,
+    surface = Color.White,
     onSurface = Neutral10,
-    surfaceVariant = Neutral90,
+    surfaceVariant = Neutral95,
     onSurfaceVariant = Neutral30,
+    surfaceTint = Color.Transparent, // primary tonal blending 차단 → 보라/파랑 끼 제거
+
+    // M3 surfaceContainer 시리즈 (NavigationBar, Card, Menu 등이 사용)
+    surfaceContainerLowest = Color.White,
+    surfaceContainerLow = Color.White,
+    surfaceContainer = Color.White,
+    surfaceContainerHigh = Color.White,
+    surfaceContainerHighest = Color.White,
 
     outline = Neutral50,
     outlineVariant = Neutral80,
