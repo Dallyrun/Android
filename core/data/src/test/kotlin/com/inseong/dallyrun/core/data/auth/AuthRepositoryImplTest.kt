@@ -43,6 +43,8 @@ class AuthRepositoryImplTest {
             password = "Aa1!Aa1!",
             nickname = "runner",
             profileImageUri = null,
+            ageGroup = com.inseong.dallyrun.core.model.AgeGroup.THIRTIES,
+            gender = com.inseong.dallyrun.core.model.Gender.MALE,
         )
 
         assertEquals("dev-access-token", result.accessToken)

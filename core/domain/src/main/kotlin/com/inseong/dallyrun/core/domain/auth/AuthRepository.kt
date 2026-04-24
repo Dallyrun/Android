@@ -1,6 +1,8 @@
 package com.inseong.dallyrun.core.domain.auth
 
+import com.inseong.dallyrun.core.model.AgeGroup
 import com.inseong.dallyrun.core.model.AuthToken
+import com.inseong.dallyrun.core.model.Gender
 import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
@@ -12,6 +14,8 @@ interface AuthRepository {
         password: String,
         nickname: String,
         profileImageUri: String?,
+        ageGroup: AgeGroup,
+        gender: Gender,
     ): AuthToken
 
     suspend fun refreshToken(): AuthToken
