@@ -15,4 +15,6 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.datastore.preferences)
     testImplementation(projects.core.testing)
+    testImplementation(libs.kotlinx.serialization.json)
+    testImplementation(libs.retrofit.core)
 }

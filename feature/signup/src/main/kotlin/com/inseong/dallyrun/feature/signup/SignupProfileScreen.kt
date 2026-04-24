@@ -87,14 +87,21 @@ internal fun SignupProfileScreen(
             modifier = Modifier.align(Alignment.CenterHorizontally),
         )
 
+        Spacer(modifier = Modifier.height(8.dp))
         if (uiState.profileImageUri != null) {
-            Spacer(modifier = Modifier.height(8.dp))
             TextButton(
                 onClick = onPickImage,
                 modifier = Modifier.align(Alignment.CenterHorizontally),
             ) {
                 Text(text = stringResource(id = R.string.signup_profile_image_change))
             }
+        } else {
+            Text(
+                text = stringResource(id = R.string.signup_profile_image_required),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+            )
         }
 
         Spacer(modifier = Modifier.height(24.dp))
