@@ -115,7 +115,8 @@ git branch -D <머지된-브랜치>
 - **`core:designsystem`** — Material 3 theme, shared design components
 - **`core:ui`** — Reusable Compose UI components
 - **`core:testing`** — 공유 테스트 인프라 (MainDispatcherRule, TestData, MockK, Turbine)
-- **`feature:login`** — 이메일/비밀번호 로그인 화면 (앱 startDestination)
+- **`feature:splash`** — 1.5초 스플래시 + 자동 로그인 분기 (앱 startDestination)
+- **`feature:login`** — 이메일/비밀번호 로그인 화면
 - **`feature:signup`** — 3단계 회원가입 플로우 (이메일 → 비밀번호 → 프로필)
 - **`feature:home`** — 메인 대시보드 (BottomBar 홈 탭, "달리기 시작" 버튼)
 - **`feature:community`** — 커뮤니티 탭 (placeholder)
