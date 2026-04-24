@@ -34,6 +34,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.inseong.dallyrun.core.designsystem.R as DesignSystemR
 import com.inseong.dallyrun.core.designsystem.theme.DallyrunTheme
 
 @Composable
@@ -51,12 +52,25 @@ internal fun LoginScreen(
         verticalArrangement = Arrangement.Center,
     ) {
         Image(
-            painter = painterResource(id = R.drawable.dallyrun_logo),
+            painter = painterResource(id = DesignSystemR.drawable.dallyrun_logo),
             contentDescription = stringResource(id = R.string.login_logo_description),
             modifier = Modifier.size(96.dp),
         )
 
-        Spacer(modifier = Modifier.height(48.dp))
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text(
+            text = stringResource(id = R.string.login_welcome_title),
+            style = MaterialTheme.typography.headlineSmall,
+        )
+        Spacer(modifier = Modifier.height(6.dp))
+        Text(
+            text = stringResource(id = R.string.login_welcome_subtitle),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+
+        Spacer(modifier = Modifier.height(32.dp))
 
         OutlinedTextField(
             value = uiState.email,

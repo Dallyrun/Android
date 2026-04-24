@@ -12,6 +12,8 @@ import com.inseong.dallyrun.feature.run.navigation.RunRoute
 import com.inseong.dallyrun.feature.run.navigation.runScreen
 import com.inseong.dallyrun.feature.signup.navigation.navigateToSignup
 import com.inseong.dallyrun.feature.signup.navigation.signupGraph
+import com.inseong.dallyrun.feature.splash.navigation.SplashRoute
+import com.inseong.dallyrun.feature.splash.navigation.splashScreen
 
 @Composable
 fun DallyrunNavHost(
@@ -20,9 +22,13 @@ fun DallyrunNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = LoginRoute,
+        startDestination = SplashRoute,
         modifier = modifier,
     ) {
+        splashScreen(
+            onNavigateToLogin = { navController.navigateClearingSplash(LoginRoute) },
+            onNavigateToHome = { navController.navigateClearingSplash(MainRoute) },
+        )
         loginScreen(
             onNavigateToSignup = { navController.navigateToSignup() },
             onNavigateToHome = { navController.navigateToMainFromAuth() },
@@ -45,6 +51,15 @@ private fun NavHostController.navigateToMainFromAuth() {
         route = MainRoute,
         navOptions = navOptions {
             popUpTo(LoginRoute) { inclusive = true }
+        },
+    )
+}
+
+private fun NavHostController.navigateClearingSplash(route: Any) {
+    navigate(
+        route = route,
+        navOptions = navOptions {
+            popUpTo(SplashRoute) { inclusive = true }
         },
     )
 }
