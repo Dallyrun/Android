@@ -1,6 +1,8 @@
 package com.inseong.dallyrun.core.domain.auth
 
+import com.inseong.dallyrun.core.model.AgeGroup
 import com.inseong.dallyrun.core.model.AuthToken
+import com.inseong.dallyrun.core.model.Gender
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -17,23 +19,60 @@ class SignupUseCaseTest {
     fun `should delegate to repository with all fields`() = runTest {
         val expected = AuthToken(accessToken = "access", refreshToken = "refresh")
         coEvery {
-            authRepository.signup("a@b.c", "12345678", "runner", "content://uri")
+            authRepository.signup(
+                email = "a@b.c",
+                password = "Aa1!Aa1!",
+                nickname = "runner",
+                profileImageUri = "content://uri",
+                ageGroup = AgeGroup.THIRTIES,
+                gender = Gender.MALE,
+            )
         } returns expected
 
-        val result = useCase("a@b.c", "12345678", "runner", "content://uri")
+        val result = useCase(
+            email = "a@b.c",
+            password = "Aa1!Aa1!",
+            nickname = "runner",
+            profileImageUri = "content://uri",
+            ageGroup = AgeGroup.THIRTIES,
+            gender = Gender.MALE,
+        )
 
         assertEquals(expected, result)
-        coVerify { authRepository.signup("a@b.c", "12345678", "runner", "content://uri") }
+        coVerify {
+            authRepository.signup(
+                email = "a@b.c",
+                password = "Aa1!Aa1!",
+                nickname = "runner",
+                profileImageUri = "content://uri",
+                ageGroup = AgeGroup.THIRTIES,
+                gender = Gender.MALE,
+            )
+        }
     }
 
     @Test
     fun `should pass null profileImageUri through`() = runTest {
         val expected = AuthToken(accessToken = "a", refreshToken = "r")
         coEvery {
-            authRepository.signup("a@b.c", "12345678", "runner", null)
+            authRepository.signup(
+                email = "a@b.c",
+                password = "Aa1!Aa1!",
+                nickname = "runner",
+                profileImageUri = null,
+                ageGroup = AgeGroup.TWENTIES,
+                gender = Gender.FEMALE,
+            )
         } returns expected
 
-        val result = useCase("a@b.c", "12345678", "runner", null)
+        val result = useCase(
+            email = "a@b.c",
+            password = "Aa1!Aa1!",
+            nickname = "runner",
+            profileImageUri = null,
+            ageGroup = AgeGroup.TWENTIES,
+            gender = Gender.FEMALE,
+        )
 
         assertEquals(expected, result)
     }

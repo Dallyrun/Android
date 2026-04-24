@@ -1,7 +1,9 @@
 package com.inseong.dallyrun.core.data.auth
 
 import com.inseong.dallyrun.core.domain.auth.AuthRepository
+import com.inseong.dallyrun.core.model.AgeGroup
 import com.inseong.dallyrun.core.model.AuthToken
+import com.inseong.dallyrun.core.model.Gender
 import com.inseong.dallyrun.core.network.AuthApi
 import com.inseong.dallyrun.core.network.model.TokenRefreshRequest
 import com.inseong.dallyrun.core.network.model.toDomain
@@ -29,8 +31,13 @@ internal class AuthRepositoryImpl @Inject constructor(
         password: String,
         nickname: String,
         profileImageUri: String?,
+        ageGroup: AgeGroup,
+        gender: Gender,
     ): AuthToken {
-        // TODO: 백엔드 연동 시 AuthApi.signup 호출(프로필 이미지 업로드 포함)로 교체.
+        // TODO: 백엔드 연동 시 AuthApi.signup 호출로 교체. 백엔드 전송 값:
+        //  - ageGroup.serverValue (Int: 20/30/40/50/60)
+        //  - gender.name (String: "MALE"/"FEMALE")
+        //  - profileImageUri 가 null 이 아니면 multipart 업로드.
         //  현재는 회원가입 완료 후 메인 진입을 위한 dev stub.
         val token = PLACEHOLDER_TOKEN
         tokenManager.saveTokens(

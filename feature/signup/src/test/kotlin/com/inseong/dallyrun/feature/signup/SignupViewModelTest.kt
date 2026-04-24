@@ -2,7 +2,9 @@ package com.inseong.dallyrun.feature.signup
 
 import app.cash.turbine.test
 import com.inseong.dallyrun.core.domain.auth.SignupUseCase
+import com.inseong.dallyrun.core.model.AgeGroup
 import com.inseong.dallyrun.core.model.AuthToken
+import com.inseong.dallyrun.core.model.Gender
 import com.inseong.dallyrun.core.testing.MainDispatcherRule
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -100,9 +102,36 @@ class SignupViewModelTest {
     // ───── Profile step ─────
 
     @Test
-    fun `should enable canSubmit when nickname is filled`() {
+    fun `should reject canSubmit when only nickname is filled`() {
         val vm = viewModel()
         vm.onEvent(SignupUiEvent.OnNicknameChange("runner"))
+        assertFalse(vm.uiState.value.canSubmit)
+    }
+
+    @Test
+    fun `should reject canSubmit when nickname is single character`() {
+        val vm = viewModel()
+        vm.onEvent(SignupUiEvent.OnNicknameChange("r"))
+        vm.onEvent(SignupUiEvent.OnAgeGroupSelect(AgeGroup.THIRTIES))
+        vm.onEvent(SignupUiEvent.OnGenderSelect(Gender.MALE))
+        assertFalse(vm.uiState.value.canSubmit)
+    }
+
+    @Test
+    fun `should reject canSubmit when nickname has whitespace`() {
+        val vm = viewModel()
+        vm.onEvent(SignupUiEvent.OnNicknameChange("run ner"))
+        vm.onEvent(SignupUiEvent.OnAgeGroupSelect(AgeGroup.THIRTIES))
+        vm.onEvent(SignupUiEvent.OnGenderSelect(Gender.MALE))
+        assertFalse(vm.uiState.value.canSubmit)
+    }
+
+    @Test
+    fun `should enable canSubmit when nickname age and gender are all set`() {
+        val vm = viewModel()
+        vm.onEvent(SignupUiEvent.OnNicknameChange("runner"))
+        vm.onEvent(SignupUiEvent.OnAgeGroupSelect(AgeGroup.THIRTIES))
+        vm.onEvent(SignupUiEvent.OnGenderSelect(Gender.MALE))
         assertTrue(vm.uiState.value.canSubmit)
     }
 
@@ -113,18 +142,47 @@ class SignupViewModelTest {
         assertEquals("content://image/123", vm.uiState.value.profileImageUri)
     }
 
+    @Test
+    fun `should toggle age dropdown expand and collapse`() {
+        val vm = viewModel()
+        assertFalse(vm.uiState.value.isAgeDropdownExpanded)
+        vm.onEvent(SignupUiEvent.OnAgeDropdownExpand)
+        assertTrue(vm.uiState.value.isAgeDropdownExpanded)
+        vm.onEvent(SignupUiEvent.OnAgeDropdownDismiss)
+        assertFalse(vm.uiState.value.isAgeDropdownExpanded)
+    }
+
+    @Test
+    fun `should auto-collapse dropdown after selecting age`() {
+        val vm = viewModel()
+        vm.onEvent(SignupUiEvent.OnAgeDropdownExpand)
+        vm.onEvent(SignupUiEvent.OnAgeGroupSelect(AgeGroup.FORTIES))
+        assertEquals(AgeGroup.FORTIES, vm.uiState.value.ageGroup)
+        assertFalse(vm.uiState.value.isAgeDropdownExpanded)
+    }
+
     // ───── Submit ─────
 
     @Test
     fun `should emit NavigateToHome on successful signup`() = runTest {
-        coEvery { signupUseCase(any(), any(), any(), any()) } returns
-            AuthToken(accessToken = "a", refreshToken = "r")
+        coEvery {
+            signupUseCase(
+                email = "a@b.c",
+                password = "Aa1!Aa1!",
+                nickname = "runner",
+                profileImageUri = null,
+                ageGroup = AgeGroup.THIRTIES,
+                gender = Gender.MALE,
+            )
+        } returns AuthToken(accessToken = "a", refreshToken = "r")
 
         val vm = viewModel()
         vm.onEvent(SignupUiEvent.OnEmailChange("a@b.c"))
         vm.onEvent(SignupUiEvent.OnPasswordChange("Aa1!Aa1!"))
         vm.onEvent(SignupUiEvent.OnPasswordConfirmChange("Aa1!Aa1!"))
         vm.onEvent(SignupUiEvent.OnNicknameChange("runner"))
+        vm.onEvent(SignupUiEvent.OnAgeGroupSelect(AgeGroup.THIRTIES))
+        vm.onEvent(SignupUiEvent.OnGenderSelect(Gender.MALE))
 
         vm.sideEffect.test {
             vm.onEvent(SignupUiEvent.OnSubmit)
@@ -136,11 +194,21 @@ class SignupViewModelTest {
 
     @Test
     fun `should set errorMessage on signup failure`() = runTest {
-        coEvery { signupUseCase(any(), any(), any(), any()) } throws
-            RuntimeException("backend not ready")
+        coEvery {
+            signupUseCase(
+                email = any(),
+                password = any(),
+                nickname = any(),
+                profileImageUri = any(),
+                ageGroup = any(),
+                gender = any(),
+            )
+        } throws RuntimeException("backend not ready")
 
         val vm = viewModel()
         vm.onEvent(SignupUiEvent.OnNicknameChange("runner"))
+        vm.onEvent(SignupUiEvent.OnAgeGroupSelect(AgeGroup.THIRTIES))
+        vm.onEvent(SignupUiEvent.OnGenderSelect(Gender.MALE))
         vm.onEvent(SignupUiEvent.OnSubmit)
 
         assertEquals("backend not ready", vm.uiState.value.errorMessage)
