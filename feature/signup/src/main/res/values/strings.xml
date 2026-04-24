@@ -28,5 +28,18 @@
     <string name="signup_profile_image_change">이미지 변경</string>
     <string name="signup_profile_image_placeholder">사진 추가</string>
     <string name="signup_nickname_label">닉네임</string>
-    <string name="signup_nickname_placeholder">10자 이내로 입력해주세요</string>
+    <string name="signup_nickname_placeholder">한글, 영문, 숫자로 2~12자</string>
+    <string name="signup_nickname_invalid">한글, 영문, 숫자로 2~12자 입력해주세요</string>
+
+    <string name="signup_age_label">나이대</string>
+    <string name="signup_age_placeholder">선택해주세요</string>
+    <string name="signup_age_twenties">20대</string>
+    <string name="signup_age_thirties">30대</string>
+    <string name="signup_age_forties">40대</string>
+    <string name="signup_age_fifties">50대</string>
+    <string name="signup_age_sixties_or_over">60대 이상</string>
+
+    <string name="signup_gender_label">성별</string>
+    <string name="signup_gender_male">남자</string>
+    <string name="signup_gender_female">여자</string>
 </resources>

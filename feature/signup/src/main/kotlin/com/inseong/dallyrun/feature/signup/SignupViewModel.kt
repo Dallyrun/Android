@@ -32,6 +32,24 @@ class SignupViewModel @Inject constructor(
             is SignupUiEvent.OnProfileImageSelected ->
                 updateState { copy(profileImageUri = event.uri) }
 
+            is SignupUiEvent.OnAgeGroupSelect ->
+                updateState {
+                    copy(
+                        ageGroup = event.value,
+                        isAgeDropdownExpanded = false,
+                        errorMessage = null,
+                    )
+                }
+
+            SignupUiEvent.OnAgeDropdownExpand ->
+                updateState { copy(isAgeDropdownExpanded = true) }
+
+            SignupUiEvent.OnAgeDropdownDismiss ->
+                updateState { copy(isAgeDropdownExpanded = false) }
+
+            is SignupUiEvent.OnGenderSelect ->
+                updateState { copy(gender = event.value, errorMessage = null) }
+
             SignupUiEvent.OnSubmit -> attemptSignup()
 
             SignupUiEvent.OnErrorDismiss -> updateState { copy(errorMessage = null) }
@@ -50,6 +68,8 @@ class SignupViewModel @Inject constructor(
                     password = state.password,
                     nickname = state.nickname,
                     profileImageUri = state.profileImageUri,
+                    ageGroup = requireNotNull(state.ageGroup),
+                    gender = requireNotNull(state.gender),
                 )
                 sendSideEffect(SignupSideEffect.NavigateToHome)
             } catch (cancel: CancellationException) {

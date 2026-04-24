@@ -13,12 +13,21 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -33,6 +42,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.inseong.dallyrun.core.designsystem.theme.DallyrunTheme
+import com.inseong.dallyrun.core.domain.auth.isValidNickname
+import com.inseong.dallyrun.core.model.AgeGroup
+import com.inseong.dallyrun.core.model.Gender
 import com.inseong.dallyrun.feature.signup.components.SignupProgressBar
 
 @Composable
@@ -43,11 +55,14 @@ internal fun SignupProfileScreen(
     onSubmit: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val nicknameInvalid = uiState.nickname.isNotEmpty() && !isValidNickname(uiState.nickname)
+
     Column(
         modifier = modifier
             .fillMaxSize()
             .safeDrawingPadding()
-            .padding(horizontal = 24.dp, vertical = 16.dp),
+            .padding(horizontal = 24.dp, vertical = 16.dp)
+            .verticalScroll(rememberScrollState()),
     ) {
         SignupProgressBar(currentStep = 3)
 
@@ -64,7 +79,7 @@ internal fun SignupProfileScreen(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         ProfileImagePicker(
             imageUri = uiState.profileImageUri,
@@ -82,7 +97,7 @@ internal fun SignupProfileScreen(
             }
         }
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         OutlinedTextField(
             value = uiState.nickname,
@@ -90,11 +105,38 @@ internal fun SignupProfileScreen(
             label = { Text(text = stringResource(id = R.string.signup_nickname_label)) },
             placeholder = { Text(text = stringResource(id = R.string.signup_nickname_placeholder)) },
             singleLine = true,
+            isError = nicknameInvalid,
             enabled = !uiState.isLoading,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Done,
             ),
+            supportingText = if (nicknameInvalid) {
+                { Text(text = stringResource(id = R.string.signup_nickname_invalid)) }
+            } else {
+                null
+            },
+            modifier = Modifier.fillMaxWidth(),
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        AgeGroupDropdown(
+            selected = uiState.ageGroup,
+            expanded = uiState.isAgeDropdownExpanded,
+            enabled = !uiState.isLoading,
+            onExpandRequest = { onEvent(SignupUiEvent.OnAgeDropdownExpand) },
+            onDismissRequest = { onEvent(SignupUiEvent.OnAgeDropdownDismiss) },
+            onSelect = { onEvent(SignupUiEvent.OnAgeGroupSelect(it)) },
+            modifier = Modifier.fillMaxWidth(),
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        GenderSelector(
+            selected = uiState.gender,
+            onSelect = { onEvent(SignupUiEvent.OnGenderSelect(it)) },
+            enabled = !uiState.isLoading,
             modifier = Modifier.fillMaxWidth(),
         )
 
@@ -107,7 +149,7 @@ internal fun SignupProfileScreen(
             )
         }
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(32.dp))
 
         Button(
             onClick = onSubmit,
@@ -118,6 +160,81 @@ internal fun SignupProfileScreen(
             shape = RoundedCornerShape(12.dp),
         ) {
             Text(text = stringResource(id = R.string.signup_submit))
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun AgeGroupDropdown(
+    selected: AgeGroup?,
+    expanded: Boolean,
+    enabled: Boolean,
+    onExpandRequest: () -> Unit,
+    onDismissRequest: () -> Unit,
+    onSelect: (AgeGroup) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val displayText = selected?.let { stringResource(id = it.labelRes()) }
+        ?: stringResource(id = R.string.signup_age_placeholder)
+
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { if (it) onExpandRequest() else onDismissRequest() },
+        modifier = modifier,
+    ) {
+        OutlinedTextField(
+            value = displayText,
+            onValueChange = { /* read only */ },
+            readOnly = true,
+            enabled = enabled,
+            label = { Text(text = stringResource(id = R.string.signup_age_label)) },
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+            modifier = Modifier
+                .menuAnchor()
+                .fillMaxWidth(),
+        )
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = onDismissRequest,
+        ) {
+            AgeGroup.entries.forEach { ageGroup ->
+                DropdownMenuItem(
+                    text = { Text(text = stringResource(id = ageGroup.labelRes())) },
+                    onClick = { onSelect(ageGroup) },
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun GenderSelector(
+    selected: Gender?,
+    onSelect: (Gender) -> Unit,
+    enabled: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier) {
+        Text(
+            text = stringResource(id = R.string.signup_gender_label),
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+
+        val options = Gender.entries
+        SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
+            options.forEachIndexed { index, gender ->
+                SegmentedButton(
+                    selected = selected == gender,
+                    onClick = { onSelect(gender) },
+                    enabled = enabled,
+                    shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
+                ) {
+                    Text(text = stringResource(id = gender.labelRes()))
+                }
+            }
         }
     }
 }
@@ -182,7 +299,11 @@ private fun PreviewSignupProfileEmpty() {
 private fun PreviewSignupProfileFilled() {
     DallyrunTheme {
         SignupProfileScreen(
-            uiState = SignupUiState(nickname = "달리는 인성"),
+            uiState = SignupUiState(
+                nickname = "달리는인성",
+                ageGroup = AgeGroup.THIRTIES,
+                gender = Gender.MALE,
+            ),
             onEvent = {},
             onPickImage = {},
             onSubmit = {},
