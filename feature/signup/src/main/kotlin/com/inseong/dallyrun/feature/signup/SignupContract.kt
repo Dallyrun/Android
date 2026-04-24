@@ -32,6 +32,7 @@ data class SignupUiState(
         get() = isValidNickname(nickname) &&
             ageGroup != null &&
             gender != null &&
+            profileImageUri != null &&
             !isLoading
 }
 

@@ -27,6 +27,7 @@
     <string name="signup_profile_image_pick">프로필 이미지 선택</string>
     <string name="signup_profile_image_change">이미지 변경</string>
     <string name="signup_profile_image_placeholder">사진 추가</string>
+    <string name="signup_profile_image_required">프로필 이미지를 선택해주세요</string>
     <string name="signup_nickname_label">닉네임</string>
     <string name="signup_nickname_placeholder">한글, 영문, 숫자로 2~12자</string>
     <string name="signup_nickname_invalid">한글, 영문, 숫자로 2~12자 입력해주세요</string>

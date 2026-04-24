@@ -127,11 +127,21 @@ class SignupViewModelTest {
     }
 
     @Test
-    fun `should enable canSubmit when nickname age and gender are all set`() {
+    fun `should reject canSubmit when profile image is missing`() {
         val vm = viewModel()
         vm.onEvent(SignupUiEvent.OnNicknameChange("runner"))
         vm.onEvent(SignupUiEvent.OnAgeGroupSelect(AgeGroup.THIRTIES))
         vm.onEvent(SignupUiEvent.OnGenderSelect(Gender.MALE))
+        assertFalse(vm.uiState.value.canSubmit)
+    }
+
+    @Test
+    fun `should enable canSubmit only when profile image is also set`() {
+        val vm = viewModel()
+        vm.onEvent(SignupUiEvent.OnNicknameChange("runner"))
+        vm.onEvent(SignupUiEvent.OnAgeGroupSelect(AgeGroup.THIRTIES))
+        vm.onEvent(SignupUiEvent.OnGenderSelect(Gender.MALE))
+        vm.onEvent(SignupUiEvent.OnProfileImageSelected("content://image/123"))
         assertTrue(vm.uiState.value.canSubmit)
     }
 
@@ -170,7 +180,7 @@ class SignupViewModelTest {
                 email = "a@b.c",
                 password = "Aa1!Aa1!",
                 nickname = "runner",
-                profileImageUri = null,
+                profileImageUri = "content://image/123",
                 ageGroup = AgeGroup.THIRTIES,
                 gender = Gender.MALE,
             )
@@ -183,6 +193,7 @@ class SignupViewModelTest {
         vm.onEvent(SignupUiEvent.OnNicknameChange("runner"))
         vm.onEvent(SignupUiEvent.OnAgeGroupSelect(AgeGroup.THIRTIES))
         vm.onEvent(SignupUiEvent.OnGenderSelect(Gender.MALE))
+        vm.onEvent(SignupUiEvent.OnProfileImageSelected("content://image/123"))
 
         vm.sideEffect.test {
             vm.onEvent(SignupUiEvent.OnSubmit)
@@ -209,6 +220,7 @@ class SignupViewModelTest {
         vm.onEvent(SignupUiEvent.OnNicknameChange("runner"))
         vm.onEvent(SignupUiEvent.OnAgeGroupSelect(AgeGroup.THIRTIES))
         vm.onEvent(SignupUiEvent.OnGenderSelect(Gender.MALE))
+        vm.onEvent(SignupUiEvent.OnProfileImageSelected("content://image/123"))
         vm.onEvent(SignupUiEvent.OnSubmit)
 
         assertEquals("backend not ready", vm.uiState.value.errorMessage)

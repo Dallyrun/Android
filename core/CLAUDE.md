@@ -43,18 +43,32 @@ testing ← model (테스트 인프라, TestData)
 
 ### Auth API 패턴
 
-- **`AuthApi.kt`** — 인증 전용 Retrofit 인터페이스 (토큰 갱신, 로그아웃 등)
+- **`AuthApi.kt`** — 인증 전용 Retrofit 인터페이스 (login / signup / refresh / logout)
+  - `login`, `refresh` — JSON body
+  - `signup` — `multipart/form-data` (`data` JSON 파트 + `image` 파일 파트). `@Multipart` 사용.
+  - `logout` — Bearer 인증 필요, body 없음
+- **`SignupMultipartBuilder`** — `data` 파트(JSON)를 만드는 헬퍼 (`SignupData` DTO + Json 직렬화)
+- **`AuthApiException` / `AuthApiErrorParser`** — `HttpException` 을 상태코드별 친화 메시지로 변환. Repository 에서 `errorParser.wrap(fallback) { authApi.xxx() }` 패턴으로 사용. 백엔드 `{ "message": "..." }` 응답 본문을 우선 파싱하고 없으면 fallback 으로 폴백.
 - **`TokenProvider`** — 토큰 읽기/쓰기 인터페이스 (`core:network`에 정의, `core:data`에서 구현)
 - **`AuthInterceptor`** — 일반 API 요청에 Authorization 헤더 자동 주입 (`api/auth/` 경로 제외)
 - **`TokenAuthenticator`** — 401 응답 시 토큰 자동 갱신 + 요청 재시도
 - **`@AuthClient`** — Auth 전용 OkHttpClient/Retrofit qualifier (인터셉터 순환 방지)
-- **`ApiResponse<T>`** — 백엔드 공통 응답 래퍼
+- **`ApiResponse<T>`** — 백엔드 공통 성공 응답 래퍼 (`{ "data": T }`)
+- **`ApiErrorBody`** — 백엔드 공통 에러 응답 (`{ "message": "..." }`)
+
+DTO 필드명은 camelCase (백엔드도 camelCase 사용 — `accessToken`, `refreshToken`, `ageBracket` 등). snake_case 필요 시에만 `@SerialName` 사용.
 
 Auth 관련 변경 시:
 1. `core:network`의 `AuthApi`에 엔드포인트 추가
 2. `model/`에 요청/응답 DTO 작성
-3. `core:data`의 `AuthRepositoryImpl`에서 호출
+3. `core:data`의 `AuthRepositoryImpl`에서 `errorParser.wrap` 으로 감싸 호출
 4. `core:domain`의 `AuthRepository` 인터페이스에 메서드 추가
+
+이미지 업로드 multipart 가 필요한 경우, `core:data` 의 `ImageMultipartFactory` 가 `Uri → MultipartBody.Part` 변환을 담당 (ContentResolver 로 mime type 감지).
+
+### HTTP 평문 통신 (개발용)
+
+`app/src/debug/AndroidManifest.xml` + `app/src/debug/res/xml/network_security_config.xml` 가 debug 빌드에서만 cleartext HTTP 를 허용. release 빌드는 기본 secure 유지. 로컬 IP (`http://192.168.x.x:8080`) BASE_URL 사용 시 필요.
 
 ## core:testing 사용법
 
