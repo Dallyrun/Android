@@ -72,28 +72,37 @@ internal fun LoginScreen(
 
         Spacer(modifier = Modifier.height(32.dp))
 
+        val emailError = uiState.email.isNotEmpty() && !uiState.isEmailValid
         OutlinedTextField(
             value = uiState.email,
             onValueChange = { onEvent(LoginUiEvent.OnEmailChange(it)) },
             label = { Text(text = stringResource(id = R.string.login_email_label)) },
             placeholder = { Text(text = stringResource(id = R.string.login_email_placeholder)) },
             singleLine = true,
+            isError = emailError,
             enabled = !uiState.isLoading,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Next,
             ),
+            supportingText = if (emailError) {
+                { Text(text = stringResource(id = R.string.login_email_invalid)) }
+            } else {
+                null
+            },
             modifier = Modifier.fillMaxWidth(),
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
+        val passwordError = uiState.password.isNotEmpty() && !uiState.isPasswordValid
         OutlinedTextField(
             value = uiState.password,
             onValueChange = { onEvent(LoginUiEvent.OnPasswordChange(it)) },
             label = { Text(text = stringResource(id = R.string.login_password_label)) },
             placeholder = { Text(text = stringResource(id = R.string.login_password_placeholder)) },
             singleLine = true,
+            isError = passwordError,
             enabled = !uiState.isLoading,
             visualTransformation = if (uiState.isPasswordVisible) {
                 VisualTransformation.None
@@ -104,6 +113,11 @@ internal fun LoginScreen(
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done,
             ),
+            supportingText = if (passwordError) {
+                { Text(text = stringResource(id = R.string.login_password_invalid)) }
+            } else {
+                null
+            },
             trailingIcon = {
                 IconButton(onClick = { onEvent(LoginUiEvent.OnPasswordVisibilityToggle) }) {
                     Icon(

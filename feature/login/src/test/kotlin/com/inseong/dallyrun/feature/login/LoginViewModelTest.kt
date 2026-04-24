@@ -22,6 +22,8 @@ class LoginViewModelTest {
     private val loginUseCase = mockk<LoginUseCase>()
     private fun viewModel() = LoginViewModel(loginUseCase)
 
+    // ───── canSubmit / 형식 검증 ─────
+
     @Test
     fun `should keep canSubmit false when fields are blank`() {
         val vm = viewModel()
@@ -29,12 +31,52 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun `should enable canSubmit when both email and password are filled`() {
+    fun `should reject canSubmit when email format invalid`() {
+        val vm = viewModel()
+        vm.onEvent(LoginUiEvent.OnEmailChange("not-an-email"))
+        vm.onEvent(LoginUiEvent.OnPasswordChange("Aa1!Aa1!"))
+        assertFalse(vm.uiState.value.canSubmit)
+    }
+
+    @Test
+    fun `should reject canSubmit when password format invalid`() {
         val vm = viewModel()
         vm.onEvent(LoginUiEvent.OnEmailChange("a@b.c"))
-        vm.onEvent(LoginUiEvent.OnPasswordChange("12345678"))
+        vm.onEvent(LoginUiEvent.OnPasswordChange("12345"))
+        assertFalse(vm.uiState.value.canSubmit)
+    }
+
+    @Test
+    fun `should enable canSubmit when both fields are valid`() {
+        val vm = viewModel()
+        vm.onEvent(LoginUiEvent.OnEmailChange("a@b.c"))
+        vm.onEvent(LoginUiEvent.OnPasswordChange("Aa1!Aa1!"))
         assertTrue(vm.uiState.value.canSubmit)
     }
+
+    @Test
+    fun `should treat blank input as valid (no isError flag)`() {
+        val vm = viewModel()
+        // 빈 칸이면 isXxxValid 는 true (입력 안 했으니 에러 아님)
+        assertTrue(vm.uiState.value.isEmailValid)
+        assertTrue(vm.uiState.value.isPasswordValid)
+    }
+
+    @Test
+    fun `should mark email invalid when format wrong`() {
+        val vm = viewModel()
+        vm.onEvent(LoginUiEvent.OnEmailChange("not-email"))
+        assertFalse(vm.uiState.value.isEmailValid)
+    }
+
+    @Test
+    fun `should mark password invalid when format wrong`() {
+        val vm = viewModel()
+        vm.onEvent(LoginUiEvent.OnPasswordChange("12345"))
+        assertFalse(vm.uiState.value.isPasswordValid)
+    }
+
+    // ───── 비밀번호 보기 토글 ─────
 
     @Test
     fun `should toggle password visibility`() {
@@ -43,6 +85,8 @@ class LoginViewModelTest {
         vm.onEvent(LoginUiEvent.OnPasswordVisibilityToggle)
         assertTrue(vm.uiState.value.isPasswordVisible)
     }
+
+    // ───── SideEffect ─────
 
     @Test
     fun `should emit NavigateToSignup on signup click`() = runTest {
@@ -55,12 +99,12 @@ class LoginViewModelTest {
 
     @Test
     fun `should emit NavigateToHome on successful login`() = runTest {
-        coEvery { loginUseCase("a@b.c", "12345678") } returns
+        coEvery { loginUseCase("a@b.c", "Aa1!Aa1!") } returns
             AuthToken(accessToken = "access", refreshToken = "refresh")
 
         val vm = viewModel()
         vm.onEvent(LoginUiEvent.OnEmailChange("a@b.c"))
-        vm.onEvent(LoginUiEvent.OnPasswordChange("12345678"))
+        vm.onEvent(LoginUiEvent.OnPasswordChange("Aa1!Aa1!"))
 
         vm.sideEffect.test {
             vm.onEvent(LoginUiEvent.OnLoginClick)
@@ -76,7 +120,7 @@ class LoginViewModelTest {
 
         val vm = viewModel()
         vm.onEvent(LoginUiEvent.OnEmailChange("a@b.c"))
-        vm.onEvent(LoginUiEvent.OnPasswordChange("12345678"))
+        vm.onEvent(LoginUiEvent.OnPasswordChange("Aa1!Aa1!"))
         vm.onEvent(LoginUiEvent.OnLoginClick)
 
         assertEquals("invalid credentials", vm.uiState.value.errorMessage)
@@ -89,7 +133,7 @@ class LoginViewModelTest {
 
         val vm = viewModel()
         vm.onEvent(LoginUiEvent.OnEmailChange("a@b.c"))
-        vm.onEvent(LoginUiEvent.OnPasswordChange("12345678"))
+        vm.onEvent(LoginUiEvent.OnPasswordChange("Aa1!Aa1!"))
         vm.onEvent(LoginUiEvent.OnLoginClick)
         assertNotNull(vm.uiState.value.errorMessage)
 
