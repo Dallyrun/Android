@@ -38,7 +38,7 @@ internal fun SplashScreen(
             contentDescription = stringResource(id = R.string.splash_logo_description),
             modifier = Modifier
                 .size(120.dp)
-                .shadow(elevation = 8.dp, shape = RoundedCornerShape(28.dp), clip = false),
+                .shadow(elevation = 8.dp, shape = RoundedCornerShape(28.dp)),
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
