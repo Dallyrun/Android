@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,7 +38,7 @@ internal fun SplashScreen(
             contentDescription = stringResource(id = R.string.splash_logo_description),
             modifier = Modifier
                 .size(120.dp)
-                .shadow(elevation = 8.dp, shape = CircleShape, clip = false),
+                .shadow(elevation = 8.dp, shape = RoundedCornerShape(28.dp), clip = false),
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
