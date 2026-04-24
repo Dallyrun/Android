@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="login_logo_description">달리런 로고</string>
+    <string name="login_welcome_title">다시 만나서 반가워요</string>
+    <string name="login_welcome_subtitle">오늘도 달려볼 준비 됐나요?</string>
     <string name="login_email_label">이메일</string>
     <string name="login_email_placeholder">name@example.com</string>
     <string name="login_password_label">비밀번호</string>
