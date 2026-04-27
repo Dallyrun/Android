@@ -8,7 +8,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 |---|---|
 | `.claude/commands/` | 슬래시 커맨드 (`/build`, `/test`, `/check`, `/pr`, `/new-feature`) |
 | `.claude/skills/` | 자동 트리거되는 Skill (`new-feature-scaffold`) |
+| `.claude/agents/` | Stop 훅 등에서 호출되는 서브에이전트 정의 (`troubleshooting-recorder`) |
+| `.claude/TROUBLESHOOTING.md` | 트러블슈팅·트레이드오프·성능 개선 로그 (Stop 훅이 매 턴 자동 갱신) |
+| `.claude/settings.json` | 팀 공유 Claude Code 설정 (체크인) — 훅 등록 등 |
 | `.claude/settings.local.json` | 개인 권한 설정 (gitignore — 체크인 금지) |
+
+## Troubleshooting Log
+
+`.claude/TROUBLESHOOTING.md` 는 **트러블슈팅·트레이드오프·성능 개선** 기록의 단일 출처. PR 본문/커밋 메시지에 묻혀 사라지는 "왜 이 코드인가" 와 "재발 시 어떻게 풀었나" 를 한 곳에 모은다.
+
+- **자동 기록**: `.claude/settings.json` 의 Stop 훅이 매 턴 종료 시 `troubleshooting-recorder` 에이전트(`.claude/agents/troubleshooting-recorder.md`) 를 띄움. 에이전트가 세션 transcript 를 읽어 조건 충족 시 파일 상단에 항목 prepend. 사용자는 대기하지 않음.
+- **수동 추가**: 자동 기록이 못 잡은 사례가 있으면 그 자리에서 직접 항목을 prepend 하고 같은 PR 에 머지.
+- **카테고리**:
+  - **TROUBLE** — 빌드/런타임 에러, 비직관적 버그를 진단·해결
+  - **TRADEOFF** — 두 개 이상의 합리적 선택지 사이에서 장단점 비교 후 결정
+  - **PERF** — 측정 가능한 성능 개선 (전/후 수치 필수)
+- **기록 대상 아님**: 단순 기능 구현·스캐폴딩, 문서 업데이트, 의존성 정리, 미사용 import 제거, 진행 중 미해결 이슈, CI 통과/머지 잡무
+- 항목 형식은 `.claude/TROUBLESHOOTING.md` 상단 템플릿 참고. 새 항목은 항상 파일 상단(가장 최신이 위) 에 추가.
 
 ## Workflow
 
