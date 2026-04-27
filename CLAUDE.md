@@ -8,6 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 |---|---|
 | `.claude/commands/` | 슬래시 커맨드 (`/build`, `/test`, `/check`, `/pr`, `/new-feature`) |
 | `.claude/skills/` | 자동 트리거되는 Skill (`new-feature-scaffold`) |
+| `.claude/JOURNAL.md` | 트레이드 오프·트러블 슈팅·성능 개선 기록 (작업 중 해당 상황 발생 시 항목 추가) |
 | `.claude/settings.local.json` | 개인 권한 설정 (gitignore — 체크인 금지) |
 
 ## Workflow
