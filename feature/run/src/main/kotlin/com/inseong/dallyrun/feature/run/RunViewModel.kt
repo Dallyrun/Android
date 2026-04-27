@@ -17,6 +17,14 @@ class RunViewModel @Inject constructor() : DallyrunViewModel<RunUiState, RunUiEv
                 updateState { copy(isRunning = false, distanceMeters = 0.0, durationMillis = 0L) }
                 sendSideEffect(RunSideEffect.NavigateToHistory)
             }
+            is RunUiEvent.OnPermissionStateChanged -> updateState {
+                copy(locationPermissionGranted = event.granted)
+            }
+            RunUiEvent.RequestPermission -> sendSideEffect(RunSideEffect.LaunchPermissionRequest)
+            is RunUiEvent.OnPermissionResult -> updateState {
+                copy(locationPermissionGranted = event.granted, hasRequestedPermission = true)
+            }
+            RunUiEvent.OpenAppSettings -> sendSideEffect(RunSideEffect.OpenAppSettings)
         }
     }
 }
