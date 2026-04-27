@@ -9,15 +9,23 @@ data class RunUiState(
     val distanceMeters: Double = 0.0,
     val durationMillis: Long = 0L,
     val paceMinPerKm: Double = 0.0,
+    val locationPermissionGranted: Boolean = false,
+    val hasRequestedPermission: Boolean = false,
 ) : UiState
 
 sealed interface RunUiEvent : UiEvent {
     data object StartRun : RunUiEvent
     data object PauseRun : RunUiEvent
     data object StopRun : RunUiEvent
+    data class OnPermissionStateChanged(val granted: Boolean) : RunUiEvent
+    data object RequestPermission : RunUiEvent
+    data class OnPermissionResult(val granted: Boolean) : RunUiEvent
+    data object OpenAppSettings : RunUiEvent
 }
 
 sealed interface RunSideEffect : SideEffect {
     data object NavigateToHistory : RunSideEffect
+    data object LaunchPermissionRequest : RunSideEffect
+    data object OpenAppSettings : RunSideEffect
     data class ShowError(val message: String) : RunSideEffect
 }

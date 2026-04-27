@@ -49,4 +49,59 @@ class RunViewModelTest {
         assertEquals(0.0, state.distanceMeters, 0.0)
         assertEquals(0L, state.durationMillis)
     }
+
+    @Test
+    fun `should emit LaunchPermissionRequest when RequestPermission event`() = runTest {
+        val viewModel = RunViewModel()
+
+        viewModel.sideEffect.test {
+            viewModel.onEvent(RunUiEvent.RequestPermission)
+
+            assertEquals(RunSideEffect.LaunchPermissionRequest, awaitItem())
+        }
+    }
+
+    @Test
+    fun `should set granted true and hasRequestedPermission true when OnPermissionResult granted`() {
+        val viewModel = RunViewModel()
+
+        viewModel.onEvent(RunUiEvent.OnPermissionResult(granted = true))
+
+        val state = viewModel.uiState.value
+        assertTrue(state.locationPermissionGranted)
+        assertTrue(state.hasRequestedPermission)
+    }
+
+    @Test
+    fun `should set granted false and hasRequestedPermission true when OnPermissionResult denied`() {
+        val viewModel = RunViewModel()
+
+        viewModel.onEvent(RunUiEvent.OnPermissionResult(granted = false))
+
+        val state = viewModel.uiState.value
+        assertFalse(state.locationPermissionGranted)
+        assertTrue(state.hasRequestedPermission)
+    }
+
+    @Test
+    fun `should update granted but keep hasRequestedPermission unchanged when OnPermissionStateChanged`() {
+        val viewModel = RunViewModel()
+
+        viewModel.onEvent(RunUiEvent.OnPermissionStateChanged(granted = true))
+
+        val state = viewModel.uiState.value
+        assertTrue(state.locationPermissionGranted)
+        assertFalse(state.hasRequestedPermission)
+    }
+
+    @Test
+    fun `should emit OpenAppSettings side effect when OpenAppSettings event`() = runTest {
+        val viewModel = RunViewModel()
+
+        viewModel.sideEffect.test {
+            viewModel.onEvent(RunUiEvent.OpenAppSettings)
+
+            assertEquals(RunSideEffect.OpenAppSettings, awaitItem())
+        }
+    }
 }
