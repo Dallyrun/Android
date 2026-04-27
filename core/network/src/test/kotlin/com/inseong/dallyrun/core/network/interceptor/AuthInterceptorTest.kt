@@ -2,9 +2,7 @@ package com.inseong.dallyrun.core.network.interceptor
 
 import com.inseong.dallyrun.core.network.TokenProvider
 import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Interceptor
 import okhttp3.Protocol

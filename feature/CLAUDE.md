@@ -28,7 +28,7 @@ sealed interface RunUiEvent : UiEvent {
 }
 
 sealed interface RunSideEffect : SideEffect {
-    data class ShowError(val message: String) : RunSideEffect
+    data class NavigateToDetail(val runId: Long) : RunSideEffect
 }
 ```
 
@@ -142,12 +142,12 @@ fun NavGraphBuilder.runScreen() {
 ## 테스트 요구사항
 
 기능 구현 시 반드시 아래 테스트를 함께 작성한다.
-**모든 테스트는 `core:testing` 모듈에서 작성한다.**
+**테스트 파일은 각 모듈의 `src/test/kotlin/...` 에 위치하고, `core:testing` 모듈의 인프라(MainDispatcherRule, MockK, Turbine 등)를 `testImplementation` 으로 활용한다.**
 
 ### ViewModel 테스트 (필수)
 
 ```kotlin
-// core/testing/src/test/kotlin/.../feature/run/RunViewModelTest.kt
+// feature/run/src/test/kotlin/com/inseong/dallyrun/feature/run/RunViewModelTest.kt
 class RunViewModelTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()

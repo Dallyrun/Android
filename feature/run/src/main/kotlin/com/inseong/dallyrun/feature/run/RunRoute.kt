@@ -64,7 +64,6 @@ internal fun RunRoute(
                     context.startActivity(intent)
                 }
                 RunSideEffect.NavigateToHistory -> Unit
-                is RunSideEffect.ShowError -> Unit
             }
         }
     }
