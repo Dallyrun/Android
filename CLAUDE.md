@@ -8,8 +8,24 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 |---|---|
 | `.claude/commands/` | 슬래시 커맨드 (`/build`, `/test`, `/check`, `/pr`, `/new-feature`) |
 | `.claude/skills/` | 자동 트리거되는 Skill (`new-feature-scaffold`) |
-| `.claude/JOURNAL.md` | 트레이드 오프·트러블 슈팅·성능 개선 기록 (작업 중 해당 상황 발생 시 항목 추가) |
+| `.claude/TROUBLESHOOTING.md` | 트러블 슈팅·에러 수정·성능 개선 로그 (Stop 훅이 매 턴 자동 갱신) |
+| `.claude/hooks/` | Stop/PostToolUse 등 훅 스크립트 |
+| `.claude/settings.json` | 팀 공유 Claude Code 설정 (체크인) — 훅 등록 등 |
+| `.claude/logs/` | 훅이 만드는 로그·락 파일 (gitignore — 체크인 금지) |
 | `.claude/settings.local.json` | 개인 권한 설정 (gitignore — 체크인 금지) |
+
+## Troubleshooting Log
+
+`.claude/TROUBLESHOOTING.md` 는 **트러블 슈팅·에러 수정·성능 개선** 기록 단일 출처. PR 본문/커밋 메시지에 묻혀 사라지는 "왜 이 코드인가" 와 "재발 시 어떻게 풀었나" 를 한 곳에 모은다.
+
+- **자동 기록**: `.claude/settings.json` 의 Stop 훅이 매 턴 종료 시 `.claude/hooks/troubleshooting-recorder.sh` 를 실행 → 백그라운드 서브에이전트가 세션을 훑고 조건에 맞으면 파일 상단에 항목 추가. 사용자는 대기하지 않음 (fire-and-forget).
+- **수동 추가**: 작업 중 명백히 해당하는 일이 있으면 그 자리에서 직접 항목 추가. 같은 PR 안에 함께 머지.
+- **기록 대상**:
+  - Troubleshooting — 빌드/런타임 에러, 비직관적 버그를 진단·해결한 경우
+  - Error fix — 의미 있는 결함을 수정한 경우 (단순 typo / 정리 작업 제외)
+  - Performance — 측정 가능한 성능 개선 (전/후 수치 포함)
+- **기록 대상 아님**: 단순 리팩터링, 문서 업데이트, 의존성 정리, 진행 중 미해결 이슈
+- 항목 형식은 `.claude/TROUBLESHOOTING.md` 상단 템플릿 참고. 새 항목은 항상 파일 상단(가장 최신이 위) 에 추가.
 
 ## Workflow
 
