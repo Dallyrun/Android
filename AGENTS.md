@@ -26,6 +26,14 @@ This file provides guidance to Codex (Codex.ai/code) when working with code in t
 - **기록 대상 아님**: 단순 기능 구현·스캐폴딩, 문서 업데이트, 의존성 정리, 미사용 import 제거, 진행 중 미해결 이슈, CI 통과/머지 잡무
 - 항목 형식은 `.Codex/TROUBLESHOOTING.md` 상단 템플릿 참고. 새 항목은 항상 파일 상단(가장 최신이 위) 에 추가.
 
+## Agent Harness
+
+검증 게이트와 피드백 루프의 공용 기준은 `.agent-harness/README.md`를 따른다.
+
+- 작업 완료 전 `.agent-harness/validation-gates.md`에서 변경 유형에 맞는 게이트를 선택한다.
+- 가능하면 `scripts/verify-change.sh`로 로컬 검증을 실행하고 결과를 PR 본문 또는 최종 보고에 남긴다.
+- 같은 실패가 반복되면 `.agent-harness/feedback-loops.md` 기준에 따라 troubleshooting 기록 또는 하네스 규칙 업데이트를 검토한다.
+
 ## Workflow
 
 - 작업 시작 시 반드시 **플랜 모드**로 계획을 세운 뒤 승인받고 구현한다.
