@@ -1,12 +1,14 @@
 package com.inseong.dallyrun.core.network
 
 import com.inseong.dallyrun.core.network.model.ApiResponse
+import com.inseong.dallyrun.core.network.model.DeleteMemberRequest
 import com.inseong.dallyrun.core.network.model.LoginRequest
 import com.inseong.dallyrun.core.network.model.NetworkTokenResponse
 import com.inseong.dallyrun.core.network.model.TokenRefreshRequest
 import okhttp3.MultipartBody
 import retrofit2.http.Body
 import retrofit2.http.DELETE
+import retrofit2.http.HTTP
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
@@ -28,4 +30,7 @@ interface AuthApi {
 
     @DELETE("api/auth/logout")
     suspend fun logout()
+
+    @HTTP(method = "DELETE", path = "api/members/me", hasBody = true)
+    suspend fun deleteMember(@Body request: DeleteMemberRequest)
 }
