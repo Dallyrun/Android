@@ -19,6 +19,7 @@ import com.inseong.dallyrun.feature.my.navigation.myScreen
 @Composable
 internal fun MainContainer(
     onNavigateToRun: () -> Unit,
+    onNavigateToLogin: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val navController = rememberNavController()
@@ -51,7 +52,7 @@ internal fun MainContainer(
             homeScreen(onNavigateToRun = onNavigateToRun)
             historyScreen()
             communityScreen()
-            myScreen()
+            myScreen(onNavigateToLogin = onNavigateToLogin)
         }
     }
 }

@@ -145,7 +145,7 @@ git branch -D <머지된-브랜치>
 - **`feature:home`** — 메인 대시보드 (BottomBar 홈 탭, "달리기 시작" 버튼)
 - **`feature:run`** — 달리기 트래킹 화면 (위치/알림 권한 요청 플로우, GPS 본 구현은 추후)
 - **`feature:community`** — 커뮤니티 탭 (placeholder)
-- **`feature:my`** — MY 탭 (placeholder, 프로필/설정 추후)
+- **`feature:my`** — MY 탭 (로그아웃·회원탈퇴 진입점, 프로필/설정 화면 추후)
 - **`feature:*`** — 각 피처 모듈 (MVI 패턴)
 
 ### Convention Plugins (build-logic)

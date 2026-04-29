@@ -21,3 +21,8 @@ data class SignupData(
     val ageBracket: Int,
     val gender: String,
 )
+
+@Serializable
+data class DeleteMemberRequest(
+    val password: String,
+)

@@ -40,6 +40,7 @@ fun DallyrunNavHost(
         composable<MainRoute> {
             MainContainer(
                 onNavigateToRun = { navController.navigate(RunRoute) },
+                onNavigateToLogin = { navController.navigateToLoginClearingStack() },
             )
         }
         runScreen()
@@ -60,6 +61,15 @@ private fun NavHostController.navigateClearingSplash(route: Any) {
         route = route,
         navOptions = navOptions {
             popUpTo(SplashRoute) { inclusive = true }
+        },
+    )
+}
+
+private fun NavHostController.navigateToLoginClearingStack() {
+    navigate(
+        route = LoginRoute,
+        navOptions = navOptions {
+            popUpTo(graph.id) { inclusive = true }
         },
     )
 }

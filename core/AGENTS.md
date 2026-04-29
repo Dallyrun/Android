@@ -15,7 +15,7 @@ testing ← model (테스트 인프라, TestData)
 
 **금지:** core 모듈 간 순환 의존.
 
-**문서 동기화:** core 모듈이 추가/변경되면 이 파일의 의존성 규칙과 루트 `CLAUDE.md`의 Module Structure도 함께 업데이트한다.
+**문서 동기화:** core 모듈이 추가/변경되면 이 파일의 의존성 규칙과 루트 `AGENTS.md`의 Module Structure도 함께 업데이트한다.
 
 > 로컬 캐시(`core:database` — Room)와 GPS 추적(`core:location` — FusedLocationProviderClient, Foreground Service) 모듈은 추후 구현 시 이 문서에 다시 추가한다.
 
