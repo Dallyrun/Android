@@ -43,10 +43,11 @@ testing ← model (테스트 인프라, TestData)
 
 ### Auth API 패턴
 
-- **`AuthApi.kt`** — 인증 전용 Retrofit 인터페이스 (login / signup / refresh / logout)
+- **`AuthApi.kt`** — 인증 전용 Retrofit 인터페이스 (login / signup / refresh / logout / deleteMember)
   - `login`, `refresh` — JSON body
   - `signup` — `multipart/form-data` (`data` JSON 파트 + `image` 파일 파트). `@Multipart` 사용.
   - `logout` — Bearer 인증 필요, body 없음
+  - `deleteMember` — `DELETE /api/members/me` + `{password}` body. Retrofit `@DELETE` 는 body 비허용이라 `@HTTP(method = "DELETE", path = ..., hasBody = true)` 로 정의.
 - **`SignupMultipartBuilder`** — `data` 파트(JSON)를 만드는 헬퍼 (`SignupData` DTO + Json 직렬화)
 - **`AuthApiException` / `AuthApiErrorParser`** — `HttpException` 을 상태코드별 친화 메시지로 변환. Repository 에서 `errorParser.wrap(fallback) { authApi.xxx() }` 패턴으로 사용. 백엔드 `{ "message": "..." }` 응답 본문을 우선 파싱하고 없으면 fallback 으로 폴백.
 - **`TokenProvider`** — 토큰 읽기/쓰기 인터페이스 (`core:network`에 정의, `core:data`에서 구현)
