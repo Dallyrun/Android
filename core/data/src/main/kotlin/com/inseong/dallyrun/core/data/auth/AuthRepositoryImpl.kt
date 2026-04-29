@@ -7,6 +7,7 @@ import com.inseong.dallyrun.core.model.Gender
 import com.inseong.dallyrun.core.network.AuthApi
 import com.inseong.dallyrun.core.network.AuthApiErrorParser
 import com.inseong.dallyrun.core.network.SignupMultipartBuilder
+import com.inseong.dallyrun.core.network.model.DeleteMemberRequest
 import com.inseong.dallyrun.core.network.model.LoginRequest
 import com.inseong.dallyrun.core.network.model.TokenRefreshRequest
 import com.inseong.dallyrun.core.network.model.toDomain
@@ -77,6 +78,13 @@ internal class AuthRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun deleteMember(password: String) {
+        errorParser.wrap(::deleteMemberFallbackMessage) {
+            authApi.deleteMember(DeleteMemberRequest(password))
+        }
+        tokenManager.clearTokens()
+    }
+
     override fun isLoggedIn(): Flow<Boolean> = tokenManager.isLoggedIn()
 
     private fun loginFallbackMessage(code: Int): String = when (code) {
@@ -88,5 +96,12 @@ internal class AuthRepositoryImpl @Inject constructor(
         400 -> "입력값을 다시 확인해주세요"
         409 -> "이미 사용 중인 이메일 또는 닉네임이에요"
         else -> "회원가입에 실패했어요 (오류 $code)"
+    }
+
+    private fun deleteMemberFallbackMessage(code: Int): String = when (code) {
+        400 -> "입력값을 다시 확인해주세요"
+        401 -> "비밀번호가 올바르지 않아요"
+        404 -> "회원 정보를 찾을 수 없어요"
+        else -> "탈퇴에 실패했어요 (오류 $code)"
     }
 }
