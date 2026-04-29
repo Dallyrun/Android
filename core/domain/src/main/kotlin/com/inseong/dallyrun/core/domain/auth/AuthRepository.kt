@@ -22,5 +22,7 @@ interface AuthRepository {
 
     suspend fun logout()
 
+    suspend fun deleteMember(password: String)
+
     fun isLoggedIn(): Flow<Boolean>
 }
