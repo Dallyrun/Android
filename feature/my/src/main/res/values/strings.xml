@@ -2,4 +2,13 @@
 <resources>
     <string name="my_title">MY</string>
     <string name="my_placeholder">프로필과 설정 화면을 준비하고 있어요</string>
+    <string name="my_logout">로그아웃</string>
+    <string name="my_logout_dialog_title">로그아웃</string>
+    <string name="my_logout_dialog_message">정말 로그아웃 하시겠어요?</string>
+    <string name="my_delete_account">회원탈퇴</string>
+    <string name="my_delete_dialog_title">회원탈퇴</string>
+    <string name="my_delete_dialog_message">탈퇴 후에는 같은 이메일·닉네임으로 다시 가입할 수 없어요. 계속하려면 비밀번호를 입력해 주세요.</string>
+    <string name="my_delete_password_label">현재 비밀번호</string>
+    <string name="my_dialog_confirm">확인</string>
+    <string name="my_dialog_cancel">취소</string>
 </resources>

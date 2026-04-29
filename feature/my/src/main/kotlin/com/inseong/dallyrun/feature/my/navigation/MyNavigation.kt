@@ -14,8 +14,10 @@ fun NavController.navigateToMy(navOptions: NavOptions? = null) {
     navigate(MyRoute, navOptions)
 }
 
-fun NavGraphBuilder.myScreen() {
+fun NavGraphBuilder.myScreen(
+    onNavigateToLogin: () -> Unit,
+) {
     composable<MyRoute> {
-        MyRouteScreen()
+        MyRouteScreen(onNavigateToLogin = onNavigateToLogin)
     }
 }
